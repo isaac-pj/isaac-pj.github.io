@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>site</title>
+    <link rel="stylesheet" type="text/css" href="css/master.css">
+
+    <script type="text/javascript" src="js/global.js"></script>
+</head>
+
+<body>
+
+    <div id="modal_acertou" class="modal" onclick="hideElem('modal_acertou')">
+        <div>
+            <p>
+                Parabens! voçe jogou na lixeira correta, isso fazbem para a natureza por isso etc... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ultricies nibh at erat vestibulum posuere.
+                Praesent sollicitudin fermentum tellus at tristique.
+                Phasellus ut justo viverra, viverra purus ut, tempor turpis. Nullam fermentum elit eget dapibus dapibus. Praesent sed consectetur tellus, nec efficitur felis. In viverra libero at ante varius posuere. Aliquam facilisis nisl nunc, at sagittis turpis
+                feugiat in. agora só precisa decidir o que deseja fazer.
+            </p>
+            <a id="btn01" href=""><img src="" alt="">REUTILIZAR</a>
+            <a id="btn02" href=""><img src="" alt="">DESCARTAR</a>
+        </div>
+    </div>
+
+    <a id="navDrawer" href=""><img src="img/btn.png" alt=""></a>
+
+    <nav id="hmenu" class="hmenu">
+
+        <div id="divertilix">
+            <a href=""><img src="img/Divertilix.png" alt=""></a>
+        </div>
+        <div class="btns_navDrawer">
+            <div class="btn_navDrawer">
+                <a href=""><img src="img/btn.png" alt="">JARDIN</a>
+            </div>
+            <div class="btn_navDrawer">
+                <a href=""><img src="img/btn.png" alt="">GALERIA</a>
+            </div>
+            <div class="btn_navDrawer">
+                <a href=""><img src="img/btn.png" alt="">VÍDEOS</a>
+            </div>
+            <div class="btn_navDrawer">
+                <a href=""><img src="img/btn.png" alt="">JOGO</a>
+            </div>
+        </div>
+
+        <!-- <a id="btn_login" class="btn_right" href=""><img src="img/btn_login.png" alt=""></a> -->
+    </nav>
+
+    <div id="conteudo" class="conteudo">
+
+        <div id="papel_lix" class="lixeira" ondrop="drop(event,papel_lix)" ondragover="allowDrop(event)"></div>
+        <div id="vidro_lix" class="lixeira" ondrop="drop(event,vidro_lix)" ondragover="allowDrop(event)"></div>
+        <div id="plastico_lix" class="lixeira" ondrop="drop(event,plastico_lix)" ondragover="allowDrop(event)"></div>
+        <div id="organico_lix" class="lixeira" ondrop="drop(event,organico_lix)" ondragover="allowDrop(event)"></div>
+        <div id="metal_lix" class="lixeira" ondrop="drop(event,metal_lix)" ondragover="allowDrop(event)"></div>
+
+        <div id="papel" class="lixo" draggable="true" ondragstart="drag(event)">
+
+        </div>
+
+        <div id="metal" class="lixo" draggable="true" ondragstart="drag(event)">
+
+        </div>
+
+        <div id="plastico" class="lixo" draggable="true" ondragstart="drag(event)">
+
+        </div>
+    </div>
+
+</body>
+
+</html>

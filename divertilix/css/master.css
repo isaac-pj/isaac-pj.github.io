@@ -1,0 +1,197 @@
+*{
+  margin: 0;
+}
+
+/*nav.hmenu{
+  background-image: url(../img/placa_grande.png);
+  width: 1808px;
+  height: 200px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 20px 150px;
+}*/
+/*nav.hmenu{
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 20px 150px;
+  background-color:rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 5px 30px rgba(8, 8, 8, 0.1);
+}*/
+
+
+nav.hmenu{
+  max-width: 0vw;
+  height: 100vh;
+  background-color:rgb(251, 255, 209);
+  box-shadow: 0px 5px 30px rgba(8, 8, 8, 0.5);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: fixed;
+  opacity: 0;
+  transition: 1s;
+}
+
+#divertilix a img{
+  width: 100%;
+}
+
+.btns_navDrawer{
+  padding: 1vw;
+  max-height: 0;
+  overflow: hidden;
+  transition: 2.5s;
+}
+
+.btns_navDrawer div{
+  background-color: rgb(249, 255, 181);
+  margin-bottom: 0.5vw;
+  padding: 0.5vw;
+  border-radius: 15px;
+}
+
+.btns_navDrawer a{
+  text-decoration: none;
+  font-size: 2rem;
+  font-family: "I pixel u", sans-serif;
+  color: purple;
+  display: flex;
+  align-items: center;
+}
+
+.btns_navDrawer img{
+  margin-right: 1vw;
+}
+
+#navDrawer{
+  float: left;
+  margin: 2vw;
+}
+
+#navDrawer:hover ~ nav.hmenu, nav.hmenu:hover{
+  max-width: 20vw;
+  opacity: 1;
+}
+
+#navDrawer:hover + nav > div.btns_navDrawer, nav.hmenu:hover > div.btns_navDrawer{
+    max-height: 100%;
+}
+
+
+/*.btn_left{
+  margin-right: 30px;
+}
+
+.btn_right{
+  float: right;
+}*/
+
+div.conteudo{
+  background-image: url(../img/background02.png);
+  background-size: contain;
+  /*background-repeat: no-repeat;*/
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+div.lixeira{
+  text-align: center;
+  width: 5vw;
+  height: 12vw;
+  background-color: gray;
+  display: inline-block;
+  border-radius: 15px;
+  position: relative;
+  left: 40vw;
+  top: 50vh;
+}
+
+#papel_lix{
+  background-color: blue;
+}
+#vidro_lix{
+  background-color: green;
+}
+#plastico_lix{
+  background-color: red;
+}
+#organico_lix{
+  background-color: brown;
+}
+#metal_lix{
+  background-color: yellow;
+}
+
+div.lixo{
+  width: 2vw;
+  height: 2vw;
+  background-color: black;
+  border-radius: 30%;
+}
+
+#papel{
+  border: solid blue 3px;
+  position: absolute;
+  left: 10vw;
+  bottom: 15vh;
+}
+
+#metal{
+  border: solid yellow 3px;
+  position: absolute;
+  right: 14vw;
+  bottom: 17vh;
+}
+
+#plastico{
+  border: solid red 3px;
+  position: absolute;
+  right: 20vw;
+  bottom: 9vh;
+}
+
+
+/*modal padrão*/
+div.modal{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto Medium", sans-serif;
+  font-size: 1.5rem;
+  position: absolute;
+}
+
+.modal div{
+  width: 40vw;
+  max-height: 70vh;
+  background-color: #fff;
+  padding: 3vw;
+}
+
+.modal p{
+  margin-bottom: 3vw;
+}
+
+.modal a{
+  text-decoration: none;
+  display: inline-block;
+  background-color: rgb(127, 187, 16);
+  color: #fff;
+  padding: 1vw;
+  font-family: "I pixel u", monospace;
+  font-size: 2rem;
+  float: right;
+}
+
+#btn02{
+  background-color: rgb(16, 95, 187);
+  margin-right: 2vw;
+}
