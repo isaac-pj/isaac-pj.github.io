@@ -22,7 +22,7 @@
 nav.hmenu{
   max-width: 0vw;
   height: 100vh;
-  background-color:rgb(251, 255, 209);
+  background-color:rgb(250, 250, 250);
   box-shadow: 0px 5px 30px rgba(8, 8, 8, 0.5);
   box-sizing: border-box;
   display: flex;
@@ -30,7 +30,7 @@ nav.hmenu{
   overflow: hidden;
   position: fixed;
   opacity: 0;
-  transition: 1s;
+  transition: 0.5s;
 }
 
 #divertilix a img{
@@ -45,7 +45,7 @@ nav.hmenu{
 }
 
 .btns_navDrawer div{
-  background-color: rgb(249, 255, 181);
+  background-color: rgb(240, 240, 240);
   margin-bottom: 0.5vw;
   padding: 0.5vw;
   border-radius: 15px;
@@ -88,7 +88,7 @@ nav.hmenu{
 }*/
 
 div.conteudo{
-  background-image: url(../img/background02.png);
+  background-image: url(../img/background.png);
   background-size: contain;
   /*background-repeat: no-repeat;*/
   width: 100vw;
@@ -99,60 +99,79 @@ div.conteudo{
   left: 0;
 }
 
-div.lixeira{
-  text-align: center;
-  width: 5vw;
-  height: 12vw;
-  background-color: gray;
-  display: inline-block;
-  border-radius: 15px;
-  position: relative;
+#lixeiras {
+  position: fixed;
   left: 40vw;
   top: 50vh;
 }
 
-#papel_lix{
-  background-color: blue;
-}
-#vidro_lix{
-  background-color: green;
-}
-#plastico_lix{
-  background-color: red;
+div.lixeira{
+  text-align: center;
+  width: 4.8vw;
+  height: 8.5vw;
+  /*background-color: rgba(0, 0, 0, 0.5);;*/
+  display: inline-block;
+  border-radius: 15px;
+  position: fixed;
+  left: 40vw;
+  top: 50vh;
+
 }
 #organico_lix{
-  background-color: brown;
+  /*background-color: brown;*/
+  left: 40vw;
+}
+#vidro_lix{
+  /*background-color: green;*/
+  left: 44.8vw;
 }
 #metal_lix{
-  background-color: yellow;
+  /*background-color: yellow;*/
+  left: 49.6vw;
+}
+#plastico_lix{
+  /*background-color: red;*/
+  left: 54.4vw;
+}
+#papel_lix{
+  /*background-color: blue;*/
+  left: 59.2vw;
 }
 
-div.lixo{
-  width: 2vw;
-  height: 2vw;
-  background-color: black;
-  border-radius: 30%;
-}
-
-#papel{
-  border: solid blue 3px;
+#caixa{
   position: absolute;
   left: 10vw;
   bottom: 15vh;
 }
 
-#metal{
-  border: solid yellow 3px;
+#folhaDePapel{
   position: absolute;
   right: 14vw;
   bottom: 17vh;
 }
 
-#plastico{
-  border: solid red 3px;
+#ciaxaDeSuco{
   position: absolute;
   right: 20vw;
   bottom: 9vh;
+}
+
+#latinha{
+  position: absolute;
+  right: 27vw;
+  bottom: 7vh;
+}
+
+#garrafaDeVidro{
+  position: absolute;
+  right: 61vw;
+  bottom: 3vh;
+}
+
+#frutaMaca{
+  position: absolute;
+  right: 35vw;
+  bottom: 11vh;
 }
 
 

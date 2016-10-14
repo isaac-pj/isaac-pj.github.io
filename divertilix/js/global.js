@@ -3,16 +3,19 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
+    // ev.dataTransfer.setData("text", ev.target.id);
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
 function drop(ev, lix) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    if (data+"_lix" == lix.id) {
+    var lixo = document.getElementById(data);
+    var material = lixo.className;
+    if (material+"_lix" == lix.id) {
       showFlexElem("modal_acertou");
       ev.target.appendChild(document.getElementById(data));
-      document.getElementById(data).style.display='none';
+      document.getElementById(data).style.display='none'
     }
     else{
       alert("sorry! lixeira errada :(")
