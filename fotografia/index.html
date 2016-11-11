@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>site</title>
+    <link rel="stylesheet" type="text/css" href="css/master.css">
+</head>
+
+<body>
+  <audio id="alert">
+       <source src="songs/notification1.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="modalLogin" class="modal">
+    <div class="modalBox">
+      <form id="formLogin" action="">
+        NOME:<br>
+        <input class="textfield" type="text" autofocus="true" placeholder="*Quem é voce?" name="nome" maxlength="30" min="1" ><br><br>
+        <div id="btnSalvar" class="btn">
+          <a href="#">salvar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modalBox">
+      <form id="newPost" action="">
+        <div id="btnClose" class="btn">
+          <a href="#">X</a>
+        </div><br>
+        NOME:<br>
+        <input class="textfield" type="text"  value="Isaac Lima" placeholder="*Anonimo" name="nome" maxlength="30" min="1" ><br><br>
+        MENSSAGEM:<br>
+        <textarea class="textarea" autofocus placeholder="Escreva sua menssagem aqui :) **Mínimo 2 caracteres" name="texto" rows="4" cols="50"></textarea><br><br>
+        <div id="btnPostar" class="btn">
+          <a href="#">POSTAR</a>
+        </div>
+      </form>
+    </div>
+  </div>
+    <div class="bg">
+      <div id="bgNav"></div>
+      <div id="bgCon"></div>
+    </div>
+    <header id="header">
+      <nav id="hmenu" class="hmenu">
+          <a id="logo" href="#">
+              <img src="img/logo.png" alt="" />
+          </a>
+          <div id="btnPlus">
+            <a href="#">+</a>
+          </div>
+          <div id="btnAtualizar" class="btn">
+            <a href="#">ATUALIZAR</a>
+          </div>
+      </nav>
+    </header>
+    <div class="conteudo">
+      <!-- <div class="boxPost">
+        <span class="nome">
+          Isaac Lima
+        </span>
+        <span class="data">
+          data
+        </span>
+        <p class="texto"> O texto vai aqui</p>
+      </div> -->
+    </div>
+    <script src='js/global.js'></script>
+</body>
+
+</html>
