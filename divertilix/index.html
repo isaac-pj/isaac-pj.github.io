@@ -3,89 +3,663 @@
 
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>site</title>
+    <title>Divertilix</title>
     <link rel="stylesheet" type="text/css" href="css/master.css">
-
-    <script type="text/javascript" src="js/global.js"></script>
 </head>
 
 <body>
-
-    <div id="modal_acertou" class="modal" onclick="hideElem('modal_acertou')">
-        <div>
+    <div id="modal_acertou" class="modal" onclick="fecharModal('modal_acertou')">
+        <div class="interno">
             <p>
-                Parabens! voçe jogou na lixeira correta, isso fazbem para a natureza por isso etc... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ultricies nibh at erat vestibulum posuere.
-                Praesent sollicitudin fermentum tellus at tristique.
-                Phasellus ut justo viverra, viverra purus ut, tempor turpis. Nullam fermentum elit eget dapibus dapibus. Praesent sed consectetur tellus, nec efficitur felis. In viverra libero at ante varius posuere. Aliquam facilisis nisl nunc, at sagittis turpis
-                feugiat in. agora só precisa decidir o que deseja fazer.
+              Parabéns! Você jogou na lixeira correta, isso faz bem para a natureza e agora estou um pouco mais
+              perto de concluir meu objetivo, então só precisa decidir o que deseja fazer.
             </p>
-            <a id="btn01" href=""><img src="" alt="">REUTILIZAR</a>
-            <a id="btn02" href=""><img src="" alt="">DESCARTAR</a>
+            <a id="btn01" class="btn" href="#"><img src="" alt="">REUTILIZAR</a>
+            <a id="btn02" class="btn" href="#"><img src="" alt="">DESCARTAR</a>
+        </div>
+    </div>
+    <div id="modal_errou" class="modal" onclick="fecharModal('modal_errou')">
+        <div class="interno">
+            <p>
+              Ops! Essa não é a lixeira correta, você pode dar uma olhadinha antes em que lixeira está jogando,
+              jogar na lixeira errada dificulta o trabalho de coleta dos catadores e pode trazer sérios prejuízos.
+              Por favor peço que não desista, continue me ajudando, você pode aprender mais sobre as lixeiras na escola.
+            </p>
+            <a id="btn03" class="btn" href="#"><img src="" alt="">FECHAR</a>
+        </div>
+    </div>
+    <div id="modal_entrar" class="modal" onclick="fecharModal('modal_entrar')">
+      <form id="formEntrar">
+        <div class="bar"></div>
+          <div class="form-group">
+            <label for="InputName">NOME</label></br>
+            <input type="text" class="form-control" id="InputName" placeholder="Nome de usuário">
+          </div>
+          <div class="form-group">
+            <label for="InputPassword">SENHA</label></br>
+            <input type="password" class="form-control" id="InputPassword" placeholder="Senha">
+          </div>
+          <button id="btn-logar" type="button" class="btn">ENTRAR</button>
+      </form>
+    </div>
+    <div id="modal_lipe" class="modal">
+        <div class="interno">
+              <p>
+                Olá, amigo! Desculpe encomodar, estou no meio de uma missão, minha irmã está em apuros,
+                preciso terminar de juntar todo esse lixo e correr para salva-lá,
+                mas no momento não estou dando conta de tudo sozinho, se importaria em me dar uma mãozinha?
+                Você ainda não sabe mas estará ajudando não só a mim e sim todo o planeta.
+              </p>
+            <a id="btn04" class="btn" href="#"><img src="" alt="">OK</a>
+        </div>
+        <img id="lipe" src="img/lipe.png">
+
+        </img>
+    </div>
+    <div id="modal_remover" class="modal" onclick="fecharModal('modal_remover')">
+        <div class="interno">
+            <p>
+                Escolha os lixos que deseja remover:
+            </p>
+            <a id="btn05" class="btn" href="#"><img src="" alt="">REMOVER</a>
+            <a id="btn06" class="btn" href="#"><img src="" alt="">REMOVER TUDO</a>
         </div>
     </div>
 
-    <a id="navDrawer" href=""><img src="img/btn.png" alt=""></a>
+    <a id="navDrawer" href="#"><img src="img/btn_nav.png" alt=""></a>
 
-    <nav id="hmenu" class="hmenu">
+      <div id="bgHmenu">
+        <nav id="hmenu" class="hmenu">
+            <div class="divertilix" id='#telaDivertilix'>
+                <a id='#telaDivertilix' href="#"><img id='#telaDivertilix' src="img/Divertilix.png" alt=""></a>
+            </div>
+            <div id="btns_navDrawer" class="btns_navDrawer">
+                <div class="btn_navDrawer" id='#telaDivertilix'>
+                  <a id='#telaDivertilix' href="#" ><img id='#telaDivertilix' src="img/btn_inicio.png" alt="">INÍCIO</a>
+                </div>
+                <div class="btn_navDrawer" id="#telaVideos">
+                  <a id="#telaVideos" href="#" ><img id="#telaVideos" src="img/btn_videos.png" alt="">VÍDEOS</a>
+                </div>
+                <div class="btn_navDrawer" id="#telaGaleria">
+                  <a id="#telaGaleria" rel="telaGaleria" href="#"><img id="#telaGaleria" src="img/btn_galeria.png" alt="">GALERIA</a>
+                </div>
+                <div class="btn_navDrawer" id="#telaJogo">
+                  <a id="#telaJogo" href="#"><img id="#telaJogo" src="img/btn_jogo.png" alt="">JOGO</a>
+                </div>
+                <div class="btn_navDrawer-conf" id="btn-mudo">
+                  <a id="btn-mudo" href="#"><img src="img/btn-mudo.png" alt="">MÚSICA</a>
+                </div>
+            </div>
 
-        <div id="divertilix">
-            <a href=""><img src="img/Divertilix.png" alt=""></a>
+            <!-- <a id="btn_login" class="btn_right" href=""><img src="img/btn_login.png" alt=""></a> -->
+        </nav>
+      </div>
+
+    <div class="intro">
+
+      <div id="telaDivertilix" class="tela-divertilix">
+
+        <audio id="ambient" loop="true" defaultMuted="false">
+          <source src="song/ambient.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="passaros"  defaultMuted="false">
+          <source src="song/passaros.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="moscas" loop="true">
+          <source src="song/moscas.mp3" type="audio/mpeg">
+        </audio>
+
+        <span class="start select" >CLICK to START</span>
+
+        <img id="escola" class="select" src="img/escola.png">
+
+        <div class="lixeiras">
+          <!-- <img id="armacao" src="img/armacao.png"> -->
+            <div id="papel" class="lixeira" ondrop="drop(event,papel)" ondragover="allowDrop(event)">
+              <img class="teste" id="" src="img/papel.png"></img>
+            </div>
+            <div id="vidro" class="lixeira" ondrop="drop(event,vidro)" ondragover="allowDrop(event)">
+              <img class="teste" id="" src="img/vidro.png"></img>
+            </div>
+            <div id="plastico" class="lixeira" ondrop="drop(event,plastico)" ondragover="allowDrop(event)">
+              <img class="teste" id="" src="img/plastico.png"></img>
+            </div>
+            <div id="organico" class="lixeira" ondrop="drop(event,organico)" ondragover="allowDrop(event)">
+              <img class="teste" id="" src="img/organico.png"></img>
+            </div>
+            <div id="metal" class="lixeira" ondrop="drop(event,metal)" ondragover="allowDrop(event)">
+              <img class="teste" id="" src="img/metal.png"></img>
+            </div>
+          </img>
         </div>
-        <div class="btns_navDrawer">
-            <div class="btn_navDrawer">
-                <a href=""><img src="img/btn.png" alt="">JARDIN</a>
-            </div>
-            <div class="btn_navDrawer">
-                <a href=""><img src="img/btn.png" alt="">GALERIA</a>
-            </div>
-            <div class="btn_navDrawer">
-                <a href=""><img src="img/btn.png" alt="">VÍDEOS</a>
-            </div>
-            <div class="btn_navDrawer">
-                <a href=""><img src="img/btn.png" alt="">JOGO</a>
-            </div>
+
+
+
+        <div id="comum" class="lixeira" ondrop="drop(event,comum)" ondragover="allowDrop(event)">
+          <img id="lixeiraComum" class="select vazia" src="img/lixeiraComum.png">
+          </img>
         </div>
 
-        <!-- <a id="btn_login" class="btn_right" href=""><img src="img/btn_login.png" alt=""></a> -->
-    </nav>
 
-    <div id="conteudo" class="conteudo">
 
-        <img id="lixeiras" src="img/lixeiras_seletivas.png">
+        <img id="caixa" class="comum papel select" src="img/caixaPapelao.png" draggable="true" ondragstart="drag(event)">
 
         </img>
 
-        <div id="papel_lix" class="lixeira" ondrop="drop(event,papel_lix)" ondragover="allowDrop(event)"></div>
-        <div id="vidro_lix" class="lixeira" ondrop="drop(event,vidro_lix)" ondragover="allowDrop(event)"></div>
-        <div id="plastico_lix" class="lixeira" ondrop="drop(event,plastico_lix)" ondragover="allowDrop(event)"></div>
-        <div id="organico_lix" class="lixeira" ondrop="drop(event,organico_lix)" ondragover="allowDrop(event)"></div>
-        <div id="metal_lix" class="lixeira" ondrop="drop(event,metal_lix)" ondragover="allowDrop(event)"></div>
-
-        <img id="caixa" class="papel" src="img/caixaPapelao.png" draggable="true" ondragstart="drag(event)">
+        <img id="folhaDePapel" class="comum papel select" src="img/folha.png" draggable="true" ondragstart="drag(event)">
 
         </img>
 
-        <img id="folhaDePapel" class="papel" src="img/papel.png" draggable="true" ondragstart="drag(event)">
+        <img id="latinha" class="comum metal select" src="img/refrigerante_lata.png" draggable="true" ondragstart="drag(event)">
 
         </img>
 
-        <img id="latinha" class="metal" src="img/refrigerante_lata.png" draggable="true" ondragstart="drag(event)">
+        <img id="ciaxaDeSuco" class="comum plastico select" src="img/caixa_de_suco.png" draggable="true" ondragstart="drag(event)">
 
         </img>
 
-        <img id="ciaxaDeSuco" class="plastico" src="img/caixa_de_suco.png" draggable="true" ondragstart="drag(event)">
+        <img id="garrafaDeVidro" class="comum vidro select" src="img/garrafa.png" draggable="true" ondragstart="drag(event)">
 
         </img>
 
-        <img id="garrafaDeVidro" class="vidro" src="img/garrafa.png" draggable="true" ondragstart="drag(event)">
+        <img id="frutaMaca" class="comum organico select" src="img/fruta.png" draggable="true" ondragstart="drag(event)">
 
         </img>
 
-        <img id="frutaMaca" class="organico" src="img/fruta.png" draggable="true" ondragstart="drag(event)">
 
-        </img>
 
+
+      </div>
     </div>
+
+    <div id="telaEscola" class="tela-escola">
+      <img id="desktop" class="select" src="img/desktop.png">
+
+      </img>
+      <img id="porta" class="select" src="img/porta-escola.png">
+
+      </img>
+      <img id="atividades" class="select" src="img/atividades.png">
+
+      </img>
+      <img id="console" class="select" src="img/console.png">
+
+      </img>
+    </div>
+
+    <div id="telaGaleria" class="tela-galeria bgParallax" data-speed="1.5">
+
+        <div id="img_modal" class="img_modal">
+          <div id="img_frame" class="">
+            <div class="">
+              <img id="imagem" src="img/default.jpg" alt=""/>
+            </div>
+            <div id="controles">
+              <a href="#">
+                <img id="btnPreview" src="img/btn_preview.png" alt=""/>
+              </a>
+              <a href="#">
+                <img id="btnGrid" src="img/btn_close.png" alt=""/>
+              </a>
+              <a href="#">
+                <img id="btnNext" src="img/btn_next.png" alt=""/>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div id="galeria" class="galeria">
+          <div class="filtros">
+            <a id="btnOrdenar" href="#"><img src="img/btn_ordenar.png" alt=""></a>
+            <a id="btnFolder" href="#"><img src="img/btn_folder.png" alt=""></a>
+          </div>
+          <a class="imgs" name="natal" href="#">
+            <img id="00" class="img" src="img/imagens/0.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="01" class="img" src="img/imagens/1.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="02" class="img" src="img/imagens/2.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="03" class="img" src="img/imagens/3.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal"  href="#">
+            <img id="04" class="img" src="img/imagens/4.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="05" class="img" src="img/imagens/5.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="dia dos pais" href="#">
+            <img id="06" class="img" src="img/imagens/6.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="07" class="img" src="img/imagens/7.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="08" class="img" src="img/imagens/8.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="09" class="img" src="img/imagens/9.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="dia dos pais" href="#">
+            <img id="10" class="img" src="img/imagens/10.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="11" class="img" src="img/imagens/11.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="pascoa"  href="#">
+            <img id="12" class="img" src="img/imagens/12.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="pascoa" href="#">
+            <img id="13" class="img" src="img/imagens/13.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="14" class="img" src="img/imagens/14.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="natal" href="#">
+            <img id="15" class="img" src="img/imagens/15.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+          <a class="imgs" name="pascoa" href="#">
+            <img id="16" class="img" src="img/imagens/16.jpg" alt="" />
+            <span>legenda dessa foto</span>
+          </a>
+        </div>
+
+      </div>
+
+    <div id="telaVideos" class="tela-videos">
+
+          <div id="video_modal" class="video_modal">
+
+          </div>
+
+          <div id="bg_conteudo">
+            <div id="video_container">
+              <div class="border-aux">
+                <iframe id="videoFrame" src="https://www.youtube.com/embed/9Pgy1C_yKDQ" frameborder="0" allowfullscreen="true"></iframe>
+              </div>
+              <div id="listaMaterial">
+                <form class="niceform">
+                    <span class="title">MATERIAIS: </span><br>
+
+                  <div class="item">
+                    <input type="checkbox" name="item1" value="0" id="valor-1">
+                    <span class="inputFiled">TESOURA SEM PONTA</span>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" name="item2" value="0" id="valor-1">
+                    <span class="inputFiled">COLA BRANCA</span>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" name="item3" value="0" id="valor-1">
+                    <span class="inputFiled">BARBANTE</span>
+                  </div>
+                  <div class="item">
+                    <input type="checkbox" name="item4" value="0" id="valor-1">
+                    <span class="inputFiled">PAPELÃO</span>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+            <!-- <div id="filtrosVideos">
+              <a href="">
+                <img src="" alt="">
+              </a>
+              papel
+              <a href="">
+                <img src="" alt="">
+              </a>
+              rolo de papel
+              <a href="">
+                <img src="" alt="">
+              </a>
+              caixa de papelão
+              <a href="">
+                <img src="" alt="">
+              </a>
+              caixa de leite
+            </div> -->
+
+
+            <div id="lista">
+              <ul class="listaVideos">
+                <li class="tileVideos"><a href="#">
+                    <div class="thumbnail">
+                      <img src="thumbnails/v (1).jpg" alt="">
+                    </div>
+                    <div class="nomeVideo">
+                      <h4>Como fazer enfeites reutilizando rolos de papel higiênico</h4>
+                      <p>06:28</p>
+                    </div>
+                </a></li>
+                <li class="tileVideos" ><a href="#">
+                    <div class="thumbnail">
+                      <img src="thumbnails/v (2).jpg" alt="">
+                    </div>
+                    <div class="nomeVideo">
+                      <h4>Como fazer enfeites reutilizando rolos de papel higiênico</h4>
+                      <p>06:28</p>
+                    </div>
+                </a></li>
+                <li class="tileVideos" ><a href="#">
+                    <div class="thumbnail">
+                      <img src="thumbnails/v (3).jpg" alt="">
+                    </div>
+                    <div class="nomeVideo">
+                      <h4>Como fazer enfeites reutilizando rolos de papel higiênico</h4>
+                      <p>06:28</p>
+                    </div>
+                </a></li>
+                <li class="tileVideos" ><a href="#">
+                    <div class="thumbnail">
+                      <img src="thumbnails/v (4).jpg" alt="">
+                    </div>
+                    <div class="nomeVideo">
+                      <h4>Como fazer enfeites reutilizando rolos de papel higiênico</h4>
+                      <p>06:28</p>
+                    </div>
+                </a></li>
+                <li class="tileVideos" ><a href="#">
+                    <div class="thumbnail">
+                      <img src="thumbnails/v (5).jpg" alt="">
+                    </div>
+                    <div class="nomeVideo">
+                      <h4>Como fazer enfeites reutilizando rolos de papel higiênico</h4>
+                      <p>06:28</p>
+                    </div>
+                </a></li>
+                <li class="tileVideos" ><a href="#">
+                    <div class="thumbnail">
+                      <img src="thumbnails/v (6).jpg" alt="">
+                    </div>
+                    <div class="nomeVideo">
+                      <h4>Como fazer enfeites reutilizando rolos de papel higiênico</h4>
+                      <p>06:28</p>
+                    </div>
+                </a></li>
+                <li class="tileVideos" ><a href="#">
+                    <div class="thumbnail">
+                      <img src="thumbnails/v (7).jpg" alt="">
+                    </div>
+                    <div class="nomeVideo">
+                      <h4>Como fazer enfeites reutilizando rolos de papel higiênico</h4>
+                      <p>06:28</p>
+                    </div>
+                </a></li>
+              </ul>
+            </div>
+          </div>
+
+
+        </div>
+        <div id="telaJogo" class="tela-jogo">
+          <aside class="ranking">
+            <div class="line">
+            </div>
+            <div class="rp">
+              <div>
+                <a id="firstPlayer" href="#"><img src="img/players/default.png"></a>
+              </div>
+              <div>
+                <a href="#"><img src="img/players/default.png" alt=""></a>
+              </div>
+              <div>
+                <a href="#"><img src="img/players/default.png" alt=""></a>
+              </div>
+              <div>
+                <a href="#"><img src="img/players/default.png" alt=""></a>
+              </div>
+              <div>
+                <a href="#"><img src="img/players/default.png" alt=""></a>
+              </div>
+            </div>
+          </aside>
+          <div class="avatar">
+            <img src="img/lipe-podio.png" alt="">
+          </div>
+          <div class="pontos">
+            <span>PONTOS</br><span>5490</span></span>
+          </div>
+          <div class="inventario">
+            <div class="user">
+              <div class="photo">
+
+              </div>
+              <pre>JOÂO VICTOR</br><p>NÍVEL: <span>11</span></p></pre>
+              <a id="btn-entrar" class="btn" href="#"><img src="" alt="">ENTRAR</a>
+              <!-- <a id="btn-sair" class="btn" href="#"><img src="" alt="">SAIR</a> -->
+            </div>
+            <div class="loja">
+              <div class="loja-menu">
+                  <span class="grana">$ 0.00</span>
+                  <div class="tabs">
+                    <p class="op1 active">INVENTÁRIO</p>
+                    <p class="op2 select">MERCADO</p>
+                  </div>
+              </div>
+              <div class="loja-grade">
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <!-- duas fileiras -->
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <!-- duas fileiras -->
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+                <div class="loja-item">
+
+                </div>
+              </div>
+              <div class="inventario-grade active">
+                <div class="inventario-item">
+                  <img src="img/capacete-papelao.png" alt="">
+                </div>
+                <div class="inventario-item">
+                  <img src="img/peitoral-ferro.png" alt="">
+                </div>
+                <div class="inventario-item">
+                  <img src="img/bracelete-ferro.png" alt="">
+                </div>
+                <div class="inventario-item">
+                  <img src="img/espada-ferro.png" alt="">
+                </div>
+                <div class="inventario-item">
+                  <img src="img/botas-papelao.png" alt="">
+                </div>
+                <div class="inventario-item">
+                  <!-- <img src="img/.png" alt=""> -->
+                </div>
+                <div class="inventario-item">
+                  <!-- <img src="img/.png" alt=""> -->
+                </div>
+                <div class="inventario-item">
+                  <!-- <img src="img/.png" alt=""> -->
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <!-- duas fileiras -->
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <!-- duas fileiras -->
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+                <div class="inventario-item">
+
+                </div>
+              </div>
+            </div>
+            <div class="btn-board">
+              <a id="btn-vender" class="btn" href="#"><img src="" alt="">VENDER</a>
+              <a id="btn-doar" class="btn" href="#"><img src="" alt="">DOAR</a>
+              <a id="btn-equipar" class="btn" href="#"><img src="" alt="">EQUIPAR</a>
+              <a id="btn-jogar" class="btn" href="#"><img src="" alt="">JOGAR</a>
+            </div>
+
+          </div>
+        </div>
+
+
+  <script src="jquery/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="js/global.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 
 </body>
 
