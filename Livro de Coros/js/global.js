@@ -3,6 +3,8 @@ var vw = window.innerWidth/100;
 var vh = window.innerHeight/100;
 var songs = new Songs();
 
+// window.open(this,nome,'toolbar=yes,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,fullscreen=no')
+
 function init(){
 
   $(".side-nav").ready(function(){
@@ -109,8 +111,31 @@ function closeNav(){
   // $(".side-nav").css("left","0");
 }
 
-$(document).ready(function(){
+function requestFullScreen() {
 
+  var el = document.body;
+
+  // Supports most browsers and their versions.
+  var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen
+  || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+  if (requestMethod) {
+
+    // Native full screen.
+    requestMethod.call(el);
+
+  } else if (typeof window.ActiveXObject !== "undefined") {
+
+    // Older IE.
+    var wscript = new ActiveXObject("WScript.Shell");
+
+    if (wscript !== null) {
+      wscript.SendKeys("{F11}");
+    }
+  }
+}
+
+$(document).ready(function(){
   //inicializar
   init();
 
@@ -131,6 +156,7 @@ $(document).ready(function(){
 
   $(".scrim").click(function(){
     closeNav();
+    requestFullScreen();
   });
 
   $(".side-nav .list-item").click(function(){
@@ -140,8 +166,12 @@ $(document).ready(function(){
     // changeScreens("music-screen");
   });
 
-});
+  //Eventos de toque by Plugin jQuery hammer.js
+  $(".container .list-item").hammer().bind("press", function(event) {
+    console.log(event.target.id);
+  });
 
+});
 
 
 // var fotosIDs = new Array;
