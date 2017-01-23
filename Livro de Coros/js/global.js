@@ -6,7 +6,8 @@ var songs = new Songs();
 // window.open(this,nome,'toolbar=yes,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,fullscreen=no')
 
 function init(){
-
+  
+  requestFullScreen();
   $(".side-nav").ready(function(){
     $(".side-nav").css("width",screen.width-$(".app-bar").outerHeight()+"px");
     var hide = "-"+$(".side-nav").css("width");
@@ -156,7 +157,6 @@ $(document).ready(function(){
 
   $(".scrim").click(function(){
     closeNav();
-    requestFullScreen();
   });
 
   $(".side-nav .list-item").click(function(){
