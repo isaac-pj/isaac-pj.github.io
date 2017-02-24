@@ -1,34 +1,56 @@
 var currentScreen = "";
+var lastScreen = "";
+var currentList = [];
 var vw = window.innerWidth/100;
 var vh = window.innerHeight/100;
 var songs = new Songs();
 
-// window.open(this,nome,'toolbar=yes,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,fullscreen=no')
-
 function init(){
-  
-  requestFullScreen();
+
+  // iniciando o armazenamento localStorage
+  if (!localStorage.getItem("musicLists")) {
+    localStorage.setItem("musicLists","[]");
+  }
+  updateLists();
+
+
   $(".side-nav").ready(function(){
     $(".side-nav").css("width",screen.width-$(".app-bar").outerHeight()+"px");
     var hide = "-"+$(".side-nav").css("width");
     $(".side-nav").css("left", hide);
   });
 
+  setCurrentScreen("book-screen");
   listMusics();
-  setCurrentScreen("start-screen");
-
 }
 
-function setCurrentScreen(name){
+function setCurrentScreen(name, bool){
+  if(!bool){
+    lastScreen = currentScreen;
+  }
   currentScreen = "#"+name;
+  $(currentScreen).addClass("active");
 }
 
-function changeScreens(s){
-
+function changeScreens(s, bool){
   $(currentScreen).removeClass("active");
-  $("#"+s).addClass("active");
-  setCurrentScreen(s);
+  if(bool){
+    setCurrentScreen(s, true);
+  }else{
+    setCurrentScreen(s);
+  }
+  $(currentScreen).addClass("active");
 
+  if($(".side-nav .list-item[for='"+s+"']")[0]){
+    $(".side-nav .list-item.active").removeClass("active");
+    $($(".side-nav .list-item[for='"+s+"']")[0]).addClass("active");
+  }
+
+}
+function backScreens(){
+  $(currentScreen).removeClass("active");
+  $(lastScreen).addClass("active");
+  currentScreen = lastScreen;
 }
 
 function changeTabs(event){
@@ -44,11 +66,22 @@ function parseID(str){
 }
 
 function listMusics(){
+  // if($(".container.active .fragment-container.active .fab")[0]){
+  //   $(".container.active .fragment-container.active").addClass("margin-fab");
+  // }
   for(var i in songs.list){
 
     var node = $('<li id="'+songs.list[i].ID+'" class="list-item"></li>').html("");
-    var number = $('<div class="number"></div>').html("<strong>"+songs.list[i].numero+"</strong>");
-    var div = $('<div></div>').html("");
+
+    // if (songs.list[i].favorite = true) {
+    //   var icon = $('<i class="icon left-ident material-icons active">favorite</i>').html("");
+    // } else {
+    //   var icon = $('<i class="icon left-ident material-icons">favorite</i>').html("");
+    // }
+
+    var icon = $('<i data-reply="false" class="icon left-ident material-icons favorite"></i>').html("favorite");
+    var number = $('<strong class="number"></strong>').html(songs.list[i].numero+'.');
+    var div = $('<div ></div>').html("");
     var title = $('<span class="title"></span></br>').html(songs.list[i].titulo);
 
     var tags = function(){
@@ -70,30 +103,44 @@ function listMusics(){
     }
 
     var subtitle = $('<span class="subtitle"></span>').html("["+tags()+"]");
+    var check = $('<i data-reply="false" for="'+songs.list[i].ID+'" class="icon right-ident align-right material-icons check-box"></i>').html("check_box_outline_blank");
 
     $(div).append(title);
     $(div).append(subtitle);
+    $(node).append(icon);
     $(node).append(number);
     $(node).append(div);
+    $(node).append(check);
 
-    $("#start-screen ul.list").append(node);
+    $("#book-screen ul.list").append(node);
 
   }
 }
 
-function openMusic(){
+function openMusic(id){
 
-  if(event.target.id != ""){
-    var obj = songs.list[event.target.id];
-  }
-  else {
-    var temp = $(event.target).closest(".list-item");
-    var obj = songs.list[temp[0].id];
-  }
+  // if(event.target.id != ""){
+  //   var obj = songs.list[event.target.id];
+  // }
+  // else {
+  //   var temp = $(event.target).closest(".list-item");
+  //   var obj = songs.list[temp[0].id];
+  // }
 
-  $("#music-screen .app-bar strong").html(obj.numero);
-  $("#music-screen .app-bar span").html(obj.titulo);
-  $("#music-screen .fragment-container p").html(obj.letra);
+  $(".right-nav").css("left", "0");
+  $(".right-nav").css("visibility", "visible");
+
+  var obj = songs.list[id];
+
+  $(".right-nav .app-bar strong").html(obj.numero);
+  $(".right-nav .app-bar span").html(obj.titulo);
+  $(".right-nav .fragment-container p").html(obj.letra);
+
+}
+
+function closeMusic(id){
+  $(".right-nav").css("left", "100%");
+  $(".right-nav").css("visibility", "hidden");
 
 }
 
@@ -101,7 +148,6 @@ function openNav(){
   $(".scrim").css("visibility","visible");
   $(".side-nav").css("left","0");
   $(".scrim").css("background-color","rgba(0, 0, 0, 0.3)");
-
 }
 
 function closeNav(){
@@ -111,6 +157,209 @@ function closeNav(){
   $(".scrim").css("visibility","hidden");
   // $(".side-nav").css("left","0");
 }
+
+function clearCheckedBoxes(){
+  $(".container .list-item .check-box").removeClass("selected");
+  $(".container .list-item .check-box").html("check_box_outline_blank");
+}
+
+function startEditMode(){
+  $(".container .list").addClass("edit-mode");
+  $(".persitent-footer").addClass("active");
+  $(".fragment-container.active .fab").addClass("float-up");
+  $(".fragment-container.active").addClass("float-up");
+}
+
+function stopEditMode(){
+  $(".container .list").removeClass("edit-mode");
+  $(".persitent-footer").removeClass("active");
+  $(".fragment-container.active .fab").removeClass("float-up");
+  $(".fragment-container.active").removeClass("float-up");
+  clearCheckedBoxes();
+}
+
+function closeDialog(){
+  $(".dialog.active").removeClass("active");
+
+  $(".scrim-dialog").css("background-color","rgba(0, 0, 0, 0.0)");
+  $(".scrim-dialog").css("visibility","hidden");
+}
+
+function createList(){
+  // alert();
+  var list = $(".container .list-item .check-box.selected");
+  if (list.length > 0) {
+    currentList = [];
+    for (var i = 0; i < list.length; i++) {
+      currentList.push(parseInt($(list[i]).attr("for")));
+    }
+    // função abrir dialogo
+    $(".scrim-dialog").css("visibility","visible");
+    $(".scrim-dialog").css("background-color","rgba(0, 0, 0, 0.3)");
+    $(".dialog").addClass("active");
+  }else {
+    alert("No momento não é possivel criar uma lista vazia");
+  }
+  // console.log(currentList);
+
+  // var listReady = [];
+  // for (var i = 0; i < list.length; i++) {
+  //   // console.log($(list[i]).attr("for"));
+  //   listReady.push($(list[i]).attr("for"));
+  // }
+  // if(listReady.length > 0){
+  //   // função abrir dialogo
+  //   $(".scrim-dialog").css("visibility","visible");
+  //   $(".scrim-dialog").css("background-color","rgba(0, 0, 0, 0.3)");
+  //
+  //   $(".dialog").addClass("active");
+  //
+  // }else {
+  //   alert("No momento não é possivel criar uma lista vazia");
+  // }
+
+}
+
+function saveList(){
+
+  if ($("#book-screen .fragment-container.active .dialog.active form #list-name").val() != "") {
+
+    var lists = JSON.parse(localStorage.getItem("musicLists"));
+    var list = {
+      name:$(".dialog.active form #list-name").val(),
+      musics:currentList
+    }
+    lists.push(list);
+    localStorage.musicLists = JSON.stringify(lists);
+    updateLists();
+
+    $(".dialog.active form #list-name").val("");
+    closeDialog();
+    stopEditMode();
+
+    // showSnackbar();
+    alert("Lista "+name+" criada som sucesso! :D");
+
+  }else{
+    alert("Voçe precisa dar um nome");
+  }
+}
+
+function updateLists(){
+  // console.log(localStorage);
+  $("#cards-screen .fragment-container.active").empty();
+  var lists = JSON.parse(localStorage.musicLists);
+  // console.log(lists);
+
+  for (var i = 0; i < lists.length; i++) {
+    var card = $('<div class="card"><div>').html("");
+    var header = $('<div class="primary-title optional-header"><div>').html("");
+    var title = $('<span class="title"></span>').html(lists[i].name);
+    var subtitle = $('<span class="subtitle">21 de Outubro</span>').html("21 de Outubro");
+
+    var text = $('<div class="supporting-text"><div>').html("");
+    var ul = $('<ul></ul>').html("");
+
+    for(var j in lists[i].musics){
+      $(ul).append($('<li></li>').html('<strong>'+songs.list[lists[i].musics[j]].numero+'</strong>'+songs.list[lists[i].musics[j]].titulo));
+    }
+
+    var actions = $('<div class="actions align-right"><div>').html("");
+    var expand = $('<i class="align-left icon material-icons expand"></i>').html("keyboard_arrow_down");
+    var del = $('<i class="icon material-icons"></i>').html("delete");
+    var comment = $('<i class="icon material-icons"></i>').html("note");
+    var share = $('<i class="icon material-icons"></i>').html("share");
+
+    $(header).append(title);
+    $(header).append(subtitle);
+
+    $(text).append(ul);
+
+    $(actions).append(expand);
+    $(actions).append(del);
+    $(actions).append(comment);
+    $(actions).append(share);
+
+    $(card).append(header);
+    $(card).append(text);
+    $(card).append(actions);
+
+    $("#cards-screen .fragment-container.active").prepend(card);
+
+  }
+
+  // var li = $('<li></li>').html("");
+  // var strong = $('<strong></strong>').html("numero");
+
+}
+
+function openList(event) {
+  var card = event.currentTarget;
+
+  var name = $(card).find(".title").text();
+  var date = $(card).find(".subtitle").text();
+  var list = $(card).find(".supporting-text ul li");
+
+  $("#list-screen .nav .title").text(name+" - "+date);
+
+  $("#list-screen .list.unchecked, #list-screen .list.checked").empty();
+
+  for (var i = 0; i < list.length; i++){
+    var number = $(list[i]).find("strong").text();
+    var music = $(list[i]).text();
+
+    var listItem = $('<li class="list-item"></li>').html("");
+    var checkBox = $('<i class="icon left-ident material-icons check-box"></i>').html("check_box_outline_blank");
+    var number = $('<strong class="number"></strong>').html(""+number);
+    var title = $('<span class="title"></span>').html(""+music);
+    var comments = $('<i class="icon right-ident align-right material-icons comments"></i>').html("insert_comment");
+
+    $(listItem).append(checkBox);
+    $(listItem).append(number);
+    $(listItem).append(title);
+    $(listItem).append(comments);
+
+    $("#list-screen .list.unchecked").append(listItem);
+  }
+  changeScreens("list-screen");
+}
+
+function checkThis(element){
+  $(element).toggleClass("selected");
+  if($(element).hasClass("selected")){
+      $(element).html("check_box");
+  }else{
+    $(element).html("check_box_outline_blank");
+  }
+}
+
+function ajustHeight(element) {
+  if ( !$(element).prop('scrollTop') ) {
+    // console.log(!$(element).prop('scrollTop'));
+    // console.log("scroll: "+$(element).prop('scrollTop'));
+
+    // alert("entrei");
+    do {
+       var a = $(element).prop('scrollHeight');
+      //  console.log("var a = "+a);
+       var b = $(element).height();
+      //  console.log("var b = "+b);
+
+       $(element).height(b - 5);
+      //  console.log("element height = "+ $(element).height());
+
+      //  console.log("var a = "+a);
+      //  console.log($(element).prop('scrollHeight'));
+      //  console.log("\n");
+    }
+    while ( a && ( a != $(element).prop('scrollHeight') ) );
+  };
+
+  // console.log('saí do laço');
+  // Mude o valor + 30 para qualquer um que desejar.
+  $(element).height($(element).prop('scrollHeight'));
+  // console.log('tamanho do elemento: '+$(element).height());
+};
 
 function requestFullScreen() {
 
@@ -137,41 +386,348 @@ function requestFullScreen() {
 }
 
 $(document).ready(function(){
+
   //inicializar
   init();
+  // requestFullScreen();
+
 
   //mudar tela
-  $(".tab").click(function(){
+  $(".tab").hammer().on("tap", function(event) {
     changeTabs(event);
   });
 
   //abrir musica
-  $("#start-screen .list-item").click(function(){
-    openMusic();
-    changeScreens("music-screen");
+  // observação importante aprendida aqui - se passar o event na callback dessa forma:  function(event){}
+  //  o evento é capturado exatamente no elemento onde foi vinculado, caso use o event global, dessa forma: function(){}
+  // o evento passa a ser capturado no exato elemento que foi tocado, filho do elemento onde o evento foi vinculado, bolha até o pai e dispara o evento,
+  // no entanto, o event.target diferente do caso anterior continua sendo o exato elemento que foi tocado;
+  $("#book-screen .list-item").hammer().on("tap", function(event) {
+    // if(event.target.id != ""){
+    //   console.log("Eu tenho ID:");
+    //   console.log(event.target)
+    //   // openMusic();
+    //   // changeScreens("music-screen");
+    // }else{
+    //   console.log("Eu NÃO tenho ID:");
+    //   console.log(event.target);
+    // }
+
+    // console.log(event.target);
+    // console.log(event.gesture.target);
+
+    // if($(event.gesture.target).hasClass("list-item")){
+    //
+    //   console.log(this);
+    //
+    //   // openMusic(event.target.id);
+    //   // changeScreens("music-screen");
+    // }
+
+    // console.log($('span[rel="dnp"]'));
+    // console.log(event.gesture.target.className);
+
+    // if(event.gesture.target.className == "icon right-ident align-right material-icons check-box" || event.gesture.target.className == "icon left-ident material-icons favorite"){
+    //   event.stopPropagation();
+    //   // return false;
+    // }else{
+    //   openMusic(event.target.id);
+    //   // changeScreens("music-screen");
+    // }
+
+    if($(event.gesture.target).attr("data-reply") == "false"){
+      // event.stopPropagation();
+      // return false;
+    }else{
+      openMusic(event.target.id);
+      // changeScreens("music-screen");
+    }
+
   });
 
-  $(".nav-icon").click(function(){
+
+
+  $(".right-nav .icon.close-icon").hammer().on("tap", function(event) {
+    closeMusic();
+  });
+
+  $(".right-nav").hammer().on("swiperight", function(event) {
+    closeMusic();
+  });
+
+
+  // abrir side-nav
+  $(".nav-icon").hammer().on("tap", function(){
     openNav();
   });
 
-  $(".scrim").click(function(){
+  $(".back-icon").hammer().on("tap", function(){
+    backScreens(lastScreen);
+  });
+
+  $(".container.active").hammer().on("swiperight", function(event) {
+    openNav();
+  });
+
+  $(".scrim").hammer().on("tap",function(){
     closeNav();
   });
 
-  $(".side-nav .list-item").click(function(){
-    $(".side-nav .list-item").removeClass("active");
-
-    $(event.target).addClass("active");
-    // changeScreens("music-screen");
+  $(".scrim").hammer().on("swipeleft", function(event) {
+    closeNav();
   });
 
-  //Eventos de toque by Plugin jQuery hammer.js
-  $(".container .list-item").hammer().bind("press", function(event) {
-    console.log(event.target.id);
+  $(".side-nav .list-item").hammer().on("tap",function(event){
+    if($(event.target).attr("for") != ""){
+      changeScreens($(event.target).attr("for"));
+    }
+  });
+
+  // ocutar o fab durante rolagem
+  $(".fragment-container.active").scroll(function(){
+
+    // function hideFAB(){
+    //   setTimeout(function(){
+    //     $(".fragment-container.active .fab").css({"opacity":"1.0","width":"56px","height":"56px","right":"16px","bottom":"16px"});
+    //     return true;
+    //     // alert("ok");
+    //   }, 1000);
+    // }
+    // $(".fragment-container.active .fab").css({"opacity":"0.0","width":"0px","height":"0px","right":"44px","bottom":"44px"});
+    // hideFAB();
+
+    // function hideFAB(){
+    //   setTimeout(function(){
+    //     $(".fragment-container.active .fab").css("display","flex");
+    //     return true;
+    //     // alert("ok");
+    //   }, 1000);
+    // }
+    // $(".fragment-container.active .fab").css("display","none");
+    // hideFAB();
+
+    function hideFAB(){
+      setTimeout(function(){
+        $(".fragment-container.active .fab").removeClass("contract");
+        return true;
+        // alert("ok");
+      }, 1000);
+    }
+    $(".fragment-container.active .fab").addClass("contract");
+    hideFAB();
+
+    // console.log(event.timeStamp);
+  });
+
+  // adicionar aos favoritos
+  $(".container .list-item .favorite").hammer().on("tap", function(event){
+    $(this).css("color", "#F44336");
+  });
+
+  //Entrar no modo de edição para criar lista
+  $(".container .list-item").hammer().on("press", function(event) {
+      startEditMode();
+  });
+
+  // selecionar um item da lista
+  $(".container .list-item .check-box").hammer().on("tap", function(event) {
+    // console.log(event.target.id);
+    // $(".container .list").addClass("edit-mode");
+    // event.stopPropagation();
+    // event.preventDefault();
+    // alert("selected item");
+    // return false;
+    // var state = $(this).html();
+    //
+    // if(state == "check_box"){
+    //   $(this).html("check_box_outline_blank");
+    // }else{
+    //   $(this).html("check_box");
+    // }
+
+    checkThis(this);
+
+  });
+
+
+  //cancelar a criação de uma lista
+  $(".persitent-footer .cancel").hammer().on("tap", function(event){
+      stopEditMode();
+  });
+
+  // criar lista
+  $(".persitent-footer .create").hammer().on("tap", function(event){
+    createList();
+  });
+
+  // checando se o form está preenchido
+  $('.text-field').blur(function() {
+
+    if ($(this).val()){
+      $(this).addClass('fill');
+    }
+    else{
+      $(this).removeClass('fill');
+    }
+  });
+
+  $('.text-field').focus(function() {
+
+    $('.text-field').on('keyup', function(){
+      if($(this).val() != ""){
+        $(".drop-arrow").removeClass('visible');
+        $(".add-name").addClass('visible');
+
+      }else{
+        $(".add-name").removeClass('visible');
+        $(".drop-arrow").addClass('visible');
+      }
+
+    });
+
+    // $(".drop-arrow").hide();
+    // $(".add-name").show(400);
+    // // alert("mudei");
+  });
+
+  // epandir lista
+  // $(".container").hammer().on("tap", ".card .actions .expand", function(event){
+  // $(".fragment-container.active").hammer({domEvents:true}).on("tap", ".card .actions .expand", function(event){
+
+  $("#cards-screen .fragment-container").hammer({preventDefault: true, domEvents:true}).on("tap", ".card .actions .expand", function(event){
+    event.stopPropagation();
+
+    function expandCard(){
+      var text = $(card).children(".supporting-text");
+      if($(card).hasClass("expanded")){
+        $(text).css("max-height",list.length*48+"px");
+      }else{
+        $(text).css("max-height","144px");
+      }
+    }
+
+    var card = $(this).closest(".card")[0];
+    $(card).toggleClass("expanded");
+    var list = $(card).find(".supporting-text ul li");
+
+    expandCard();
+  });
+
+  // $(".card .actions .expand").hammer().on("tap", function(event){
+  //   // event.stopPropagation();
+  //   // event.preventDefault();
+  //
+  //   function expandCard(){
+  //     var text = $(card).children(".supporting-text");
+  //     if($(card).hasClass("expanded")){
+  //       $(text).css("max-height",list.length*48+"px");
+  //     }else{
+  //       $(text).css("max-height","144px");
+  //     }
+  //   }
+  //
+  //   var card = $(this).closest(".card")[0];
+  //   $(card).toggleClass("expanded");
+  //   var list = $(card).find(".supporting-text ul li");
+  //
+  //   expandCard();
+  // });
+
+  $(".dialog .actions .cancel").hammer().on("tap", function(event){
+
+    $(".dialog").removeClass("active");
+
+    $(".scrim-dialog").css("background-color","rgba(0, 0, 0, 0.0)");
+    $(".scrim-dialog").css("visibility","hidden");
+
+  });
+
+  $(".dialog .actions .save").hammer().on("tap", function(event){
+    saveList();
+    // alert("save");
+  });
+
+  $(".expansion-panel .header .icon.expand").hammer().on("tap", function(event){
+    $(".expansion-panel").toggleClass("expanded");
+  });
+
+  $(".expansion-panel .actions .flat-button.clear").hammer().on("tap", function(event){
+    $(".expansion-panel .set-text .text-area").text("");
+    $(".expansion-panel .set-text .text-area").val("");
+    $(".expansion-panel").removeClass("expanded");
+    $(".expansion-panel .set-text .text-area").removeAttr("readonly");
+    $(".expansion-panel").addClass("edit-mode");
+    ajustHeight($(".expansion-panel .set-text .text-area")[0]);
+  });
+
+  $(".expansion-panel .actions .flat-button.edit").hammer().on("tap", function(event){
+    $(".expansion-panel .set-text .text-area").val($(".expansion-panel .set-text .text-area").text());
+    $(".expansion-panel .set-text .text-area").removeAttr("readonly");
+    $(".expansion-panel").addClass("edit-mode");
+  });
+
+  $(".expansion-panel .actions .flat-button.cancel").hammer().on("tap", function(event){
+    if($(".expansion-panel .set-text .text-area").text() == ""){
+      $(".expansion-panel").removeClass("expanded");
+      $(".expansion-panel .set-text .text-area").val("");
+    }else{
+      $(".expansion-panel .set-text .text-area").val($(".expansion-panel .set-text .text-area").text());
+      $(".expansion-panel .set-text .text-area").attr("readonly","");
+      $(".expansion-panel").removeClass("edit-mode");
+    }
+    ajustHeight($(".expansion-panel .set-text .text-area")[0]);
+  });
+
+  $(".expansion-panel .actions .flat-button.save").hammer().on("tap", function(event){
+    if ($(".expansion-panel .set-text .text-area").val() != "") {
+      $(".expansion-panel .set-text .text-area").text($(".expansion-panel .set-text .text-area").val());
+      $(".expansion-panel .set-text .text-area").attr("readonly","");
+      $(".expansion-panel").removeClass("edit-mode");
+    }
+  });
+
+  $(".expansion-panel .set-text .text-area").keyup(function() {
+    ajustHeight(this);
+  });
+
+  $("#cards-screen .fragment-container.active").hammer({preventDefault: true, domEvents:true}).on("tap", ".card", function(event){
+    // chamar a função no futuro
+    openList(event);
+  });
+
+  $("#list-screen .list.unchecked").hammer({domEvents:true}).on("tap", ".icon.check-box", function(event){
+    checkThis(this);
+    $("#list-screen .list.checked").append($(this).closest("li"));
+    $("#list-screen .list.unchecked").remove($(this).closest("li"));
+    event.stopPropagation();
+
+    // apenas trocar as classes, em seguida criar uma função para ambos que verifica quais tem a classe.
+  });
+
+  $("#list-screen .list.checked").hammer({domEvents:true}).on("tap", ".icon.check-box", function(event){
+    checkThis(this);
+    $("#list-screen .list.unchecked").append($(this).closest("li"));
+    $("#list-screen .list.checked").remove($(this).closest("li"));
+    event.stopPropagation();
+  });
+
+  $("#list-screen .list.unchecked").hammer({domEvents:true}).on("tap", ".list-item", function(event){
+    event.stopPropagation();
+    var music = event.currentTarget;
+
+    $("#music-screen .app-bar .title").text($(music).find(".number").text());
+    $("#music-screen .fragment-container.active .title").text($(music).find(".title").text());
+    $("#music-screen .fragment-container.active .letra").html(songs.list[$(music).find(".number").text()-1].letra);
+
+    changeScreens("music-screen", true);
+  });
+
+  $("#music-screen .app-bar .icon.close-icon").hammer().on("tap", function(event){
+    changeScreens("list-screen", true);
   });
 
 });
+
 
 
 // var fotosIDs = new Array;

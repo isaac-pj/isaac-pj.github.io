@@ -15,20 +15,39 @@
 
     </div>
     <ul class="list">
-      <li class="list-item active" ><i class="material-icons">history</i>Historico</li>
-      <li class="list-item" ><i class="material-icons">favorite</i>Favoritos</li>
-      <li class="list-item" ><i class="material-icons">feedback</i>Contato</li>
+      <li for="book-screen" class="list-item active" ><i class="material-icons">book</i>Livro de coros</li>
+      <li for="cards-screen" class="list-item" ><i class="material-icons">view_list</i>Listas</li>
+      <li for="" class="list-item" ><i class="material-icons">history</i>Historico</li>
+      <li for="" class="list-item" ><i class="material-icons">favorite</i>Favoritos</li>
+      <li for="" class="list-item" ><i class="material-icons">feedback</i>Contato</li>
     </ul>
     <ul class="list support">
-      <li class="list-item" ><i class="material-icons">settings</i>Configurações</li>
-      <li class="list-item" ><i class="material-icons">help</i>Ajuda</li>
-      <li class="list-item" ><i class="material-icons">info</i>Sobre</li>
+      <li for="" class="list-item" ><i class="material-icons">settings</i>Configurações</li>
+      <li for="" class="list-item" ><i class="material-icons">help</i>Ajuda</li>
+      <li for="" class="list-item" ><i class="material-icons">info</i>Sobre</li>
     </ul>
      <!-- oisdhlfkjshlkjsdfh dlfkjhkjfd lkdjfhlkjfh -->
   </aside>
 </div>
+<!-- right nav -->
+<aside class="right-nav">
+  <nav class="nav">
+    <header class = "app-bar primary-toolbar">
+      <img class="icon left-ident close-icon" src="img/icons/system/ic_close_white_24px.svg" alt="">
+      <strong>0 </strong><span class="title" >Nome da Música</span>
+      <!-- <div class="action-icons"> -->
+        <!-- <img class="action-icon" src="img/.svg" alt=""> -->
+      <!-- </div> -->
+      <img class="icon more-icon" src="img/icons/system/ic_more_vert_white_24px.svg" alt="">
+    </header>
+  </nav>
 
-<div id="start-screen" class="container active">
+  <div id="" class="fragment-container active">
+    <p class="letra" >Letra da Música</p>
+  </div>
+</aside>
+
+<div id="book-screen" class="container">
   <nav class="nav">
     <header class = "app-bar primary-toolbar">
       <img class="icon nav-icon" src="img/icons/system/ic_menu_white_24px.svg" alt="">
@@ -43,18 +62,46 @@
     </ul>
   </nav>
 
-  <div id="ctn-1" rel="tab-1" class="fragment-container active">
+  <div id="ctn-1" rel="tab-1" class="fragment-container active" data-content-type="fab">
     <ul class="list">
       <!-- <li class="list-item">
+        <i class="icon left-ident material-icons">favorite</i>
         <div class="number">
-          <strong>1</strong>
+          <strong>325.</strong>
         </div>
         <div class="">
           <span class="title">Cantai ao senhor</span></br>
           <span class="subtitle">[oração, adoração, comunhão]</span>
         </div>
+        <i class="icon align-right material-icons check-box">check_box_outline_blank</i>
       </li> -->
     </ul>
+    <div class="scrim-dialog">
+      <div class="dialog">
+        <div class="content">
+          <span class="title">Como devo chamar?</span>
+          <form>
+            <div for="list-name" class="group">
+              <input id="list-name" class="text-field" type="text" name="name" autofocus="true" pattern="[a-z\s]+$" maxlength="30" required>
+              <i class="material-icons add-name">add</i><i class="material-icons drop-arrow visible">arrow_drop_down</i>
+              <label for="list-name" class="label">Nome</label>
+              <span class="base-line"></span>
+            </div>
+          </form>
+          <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce risus lacus, tempor ut turpis non, auctor imperdiet arcu. Phasellus non tortor nec ex rhoncus tincidunt. -->
+        </div>
+        <div class="actions align-right">
+          <button class="flat-button cancel" type="button" name="button">cancelar</button>
+          <button class="flat-button save" type="button" name="button">salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="fab" type="button" name="button"><i class="material-icons">dialpad</i></button>
+    <footer class="persitent-footer align-right">
+      <button class="flat-button cancel" type="button" name="button">cancelar</button>
+      <button class="flat-button create" type="button" name="button">criar lista</button>
+    </footer>
   </div>
   <div id="ctn-2" rel="tab-2" class="fragment-container">
     Sorry in development! :)
@@ -64,7 +111,7 @@
   </div>
 </div>
 
-<div id="music-screen" class="container">
+<!-- <div id="music-screen" class="container">
 
   <nav class="nav">
     <header class = "app-bar">
@@ -76,6 +123,120 @@
     <p class="letra" >Letra da Música</p>
   </div>
 
+</div> -->
+
+<div id="cards-screen" class="container">
+
+  <nav class="nav">
+    <header class = "app-bar primary-toolbar">
+      <img class="icon nav-icon" src="img/icons/system/ic_menu_white_24px.svg" alt="">
+      <span class="title" >Minhas Listas</span>
+      <!-- <div class="action-icons"> -->
+        <!-- <img class="action-icon" src="img/.svg" alt=""> -->
+      <!-- </div> -->
+      <img class="icon more-icon" src="img/icons/system/ic_more_vert_white_24px.svg" alt="">
+    </header>
+  </nav>
+
+  <div data-content-type="card" class="fragment-container column active">
+    <!-- No momento você possui listas! -->
+    <!-- <div class="card">
+      <div class="primary-title optional-header">
+        <span class="title">Nome da Lista</span>
+        <span class="subtitle">23 de Outubro</span>
+      </div>
+      <div class="supporting-text">
+        <ul>
+          <li><strong>15.</strong> Testando como fica</li>
+          <li><strong>37.</strong> Vai dar certo</li>
+          <li><strong>221.</strong> Acho que está bom</li>
+          <li><strong>15.</strong> Testando como fica</li>
+          <li><strong>37.</strong> Vai dar certo</li>
+          <li><strong>221.</strong> Acho que está bom</li>
+        </ul>
+      </div>
+      <div class="actions align-right">
+        <i class="align-left icon material-icons expand">keyboard_arrow_down</i>
+
+        <i class="icon material-icons">delete</i>
+        <i class="icon material-icons">note</i>
+        <i class="icon material-icons">share</i>
+      </div>
+    </div> -->
+
+  </div>
+
+</div>
+
+<div id="list-screen" class="container">
+  <nav class="nav">
+    <header class = "app-bar primary-toolbar">
+      <img class="icon back-icon" src="img/icons/system/ic_arrow_back_white_24px.svg" alt="">
+      <!-- <img class="icon nav-icon" src="img/icons/system/ic_menu_white_24px.svg" alt=""> -->
+      <span class="title" >Nome da Lista</span>
+      <!-- <div class="action-icons">
+        <img class="action-icon" src="img/.svg" alt="">
+      </div> -->
+      <img class="icon more-icon" src="img/icons/system/ic_more_vert_white_24px.svg" alt="">
+    </header>
+  </nav>
+  <div class="expansion-panel edit-mode">
+    <header class="header">
+      <span class="title">Comentarios</span>
+      <i class="icon align-right right-ident material-icons expand">keyboard_arrow_down</i>
+    </header>
+    <!-- <p class="text" ></p> -->
+    <form class="set-text">
+      <textarea class="text-area" name="notes" placeholder="Escreva uma nota! :)"></textarea>
+    </form>
+    <div class="actions align-right right-ident">
+      <button class="flat-button cancel" type="button" name="button">cancelar</button>
+      <button class="flat-button save" type="button" name="button">salvar</button>
+      <button class="flat-button clear" type="button" name="button">limpar</button>
+      <button class="flat-button edit" type="button" name="button">editar</button>
+    </div>
+  </div>
+  <div class="fragment-container column active">
+    <!-- No momento você possui listas! -->
+    <ul class="list unchecked">
+      <!-- <li class="list-item">
+        <i class="icon left-ident material-icons check-box">check_box_outline_blank</i>
+        <strong class="number">325.</strong>
+        <span class="title">Cantai ao senhor</span>
+        <i class="icon right-ident align-right material-icons comments">insert_comment</i>
+      </li> -->
+    </ul>
+    <ul class="list checked">
+      <!-- <li class="list-item">
+        <i class="icon left-ident material-icons check-box">check_box_outline_blank</i>
+        <strong class="number">325.</strong>
+        <span class="title">Cantai ao senhor</span>
+        <i class="icon right-ident align-right material-icons">insert_comment</i>
+      </li> -->
+    </ul>
+    <button class="fab" type="button" name="button"><i class="material-icons">add</i></button>
+  </div>
+</div>
+<div id="music-screen" class="container">
+  <nav class="nav">
+    <header class = "app-bar primary-toolbar title-center">
+      <img class="icon left-ident close-icon" src="img/icons/system/ic_close_white_24px.svg" alt="">
+      <!-- <img class="icon nav-icon" src="img/icons/system/ic_menu_white_24px.svg" alt=""> -->
+      <div class="">
+        <i class="align-left icon material-icons expand">keyboard_arrow_left</i>
+        <span class="title">251</span>
+        <i class="align-right icon material-icons expand">keyboard_arrow_right</i>
+      </div>
+      <!-- <div class="action-icons">
+        <img class="action-icon" src="img/.svg" alt="">
+      </div> -->
+      <img class="icon more-icon" src="img/icons/system/ic_more_vert_white_24px.svg" alt="">
+    </header>
+  </nav>
+  <div class="fragment-container column active">
+    <span class="title">Nome da Música</span>
+    <p class="letra" >Letra da Música</p>
+  </div>
 </div>
 
 
