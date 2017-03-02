@@ -49,6 +49,13 @@
 
 <div id="book-screen" class="container">
   <nav class="nav">
+    <div class="search-box">
+      <form>
+        <input class="box" type="number" name="seach" placeholder="Digite o nome:" maxlength="50">
+        <i class="icon material-icons close-search active">close</i>
+        <i class="icon material-icons clear-search">cancel</i>
+      </form>
+    </div>
     <header class = "app-bar primary-toolbar">
       <img class="icon nav-icon" src="img/icons/system/ic_menu_white_24px.svg" alt="">
       <span class="title" >Livro de Coros</span>
@@ -97,7 +104,7 @@
       </div>
     </div>
 
-    <button class="fab" type="button" name="button"><i class="material-icons">dialpad</i></button>
+    <button class="fab search-number" type="button" name="button"><i class="material-icons">dialpad</i></button>
     <footer class="persitent-footer align-right">
       <button class="flat-button cancel" type="button" name="button">cancelar</button>
       <button class="flat-button create" type="button" name="button">criar lista</button>
@@ -137,6 +144,22 @@
       <img class="icon more-icon" src="img/icons/system/ic_more_vert_white_24px.svg" alt="">
     </header>
   </nav>
+  <div class="scrim-dialog">
+    <div class="dialog">
+      <div class="content">
+        <span class="title">Deseja excluir essa lista?</span>
+          <div for="" class="group check-msg">
+            <i class="icon left-ident material-icons check-box">check_box_outline_blank</i>
+            <span class="text" >Excluir permanentemente</span>
+          </div>
+        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce risus lacus, tempor ut turpis non, auctor imperdiet arcu. Phasellus non tortor nec ex rhoncus tincidunt. -->
+      </div>
+      <div class="actions align-right">
+        <button class="flat-button cancel" type="button" name="button">cancelar</button>
+        <button class="flat-button exclude" type="button" name="button">excluir</button>
+      </div>
+    </div>
+  </div>
 
   <div data-content-type="card" class="fragment-container column active">
     <!-- No momento você possui listas! -->
@@ -163,8 +186,8 @@
         <i class="icon material-icons">share</i>
       </div>
     </div> -->
-
   </div>
+  <button class="fab" type="button" name="button"><i class="material-icons">add</i></button>
 
 </div>
 
@@ -196,7 +219,7 @@
       <button class="flat-button edit" type="button" name="button">editar</button>
     </div>
   </div>
-  <div class="fragment-container column active">
+  <div data-content-type="fab" class="fragment-container column active">
     <!-- No momento você possui listas! -->
     <ul class="list unchecked">
       <!-- <li class="list-item">

@@ -1,6 +1,7 @@
 var currentScreen = "";
 var lastScreen = "";
 var currentList = [];
+var temp = {}
 var vw = window.innerWidth/100;
 var vh = window.innerHeight/100;
 var songs = new Songs();
@@ -226,8 +227,14 @@ function saveList(){
 
     var lists = JSON.parse(localStorage.getItem("musicLists"));
     var list = {
+      id:null,
       name:$(".dialog.active form #list-name").val(),
       musics:currentList
+    }
+    if(lists.length > 0){
+      list.id = lists[lists.length-1].id + 1;
+    }else{
+      list.id = 0;
     }
     lists.push(list);
     localStorage.musicLists = JSON.stringify(lists);
@@ -250,9 +257,8 @@ function updateLists(){
   $("#cards-screen .fragment-container.active").empty();
   var lists = JSON.parse(localStorage.musicLists);
   // console.log(lists);
-
   for (var i = 0; i < lists.length; i++) {
-    var card = $('<div class="card"><div>').html("");
+    var card = $('<div id="'+lists[i].id+'"class="card"><div>').html("");
     var header = $('<div class="primary-title optional-header"><div>').html("");
     var title = $('<span class="title"></span>').html(lists[i].name);
     var subtitle = $('<span class="subtitle">21 de Outubro</span>').html("21 de Outubro");
@@ -266,9 +272,9 @@ function updateLists(){
 
     var actions = $('<div class="actions align-right"><div>').html("");
     var expand = $('<i class="align-left icon material-icons expand"></i>').html("keyboard_arrow_down");
-    var del = $('<i class="icon material-icons"></i>').html("delete");
-    var comment = $('<i class="icon material-icons"></i>').html("note");
-    var share = $('<i class="icon material-icons"></i>').html("share");
+    var del = $('<i class="icon material-icons delete"></i>').html("delete");
+    var comment = $('<i class="icon material-icons comment"></i>').html("note");
+    var share = $('<i class="icon material-icons share"></i>').html("share");
 
     $(header).append(title);
     $(header).append(subtitle);
@@ -287,6 +293,7 @@ function updateLists(){
     $("#cards-screen .fragment-container.active").prepend(card);
 
   }
+
 
   // var li = $('<li></li>').html("");
   // var strong = $('<strong></strong>').html("numero");
@@ -322,6 +329,14 @@ function openList(event) {
     $("#list-screen .list.unchecked").append(listItem);
   }
   changeScreens("list-screen");
+}
+
+function deleteList(event){
+  var lists = JSON.parse(localStorage.musicLists);
+    lists.splice(temp["deleteList"]);
+  localStorage.musicLists = JSON.stringify(lists);
+  closeDialog();
+  updateLists();
 }
 
 function checkThis(element){
@@ -454,6 +469,80 @@ $(document).ready(function(){
   $(".right-nav").hammer().on("swiperight", function(event) {
     closeMusic();
   });
+
+  function startSearchMode(event){
+    $("#book-screen .search-box .box")[0].focus();
+    $("#book-screen").addClass("search-mode");
+    var list = $("#book-screen .fragment-container .list .list-item");
+
+    $("#book-screen .search-box .box").focus(function(event){
+      console.log("peguei foco");
+      $("#book-screen .search-box .box").keyup(function(event){
+        $("#book-screen .search-box .close-search").removeClass("active");
+        $("#book-screen .search-box .clear-search").addClass("active");
+        $("#book-screen.search-mode.container .list-item").css("display","none");
+        if ($(this).val() != ""){
+          searchByNumber(parseInt($(this).val()));
+        }else{
+          $("#book-screen .search-box .clear-search").removeClass("active");
+          $("#book-screen .search-box .close-search").addClass("active");
+        }
+      });
+    });
+
+    $("#book-screen.search-mode .search-box .box").blur(function(event){
+      $("#book-screen.search-mode .search-box .box")[0].focus();
+    });
+
+    function searchByNumber(num){
+      // console.log(num);
+      if(num > 0 && num <= 303){
+        // $("#book-screen.search-mode.container #"+(num-1)).css("display","inline-flex");
+        for (var i = 0; i < list.length; i++) {
+          var str = $(list[i]).find("strong").text();
+          if (str.indexOf(num) != -1) {
+            $(list[i]).css("display","inline-flex");
+          }
+        }
+      }
+    }
+    function searchByTitle(num){
+      // console.log(num);
+      // if(num > 0 && num < 303){
+      //   $("#book-screen.search-mode.container #"+(num-1)).css("display","inline-flex");
+      // }
+      // $("#book-screen").addClass("search-mode");
+      // var list = $("#book-screen .fragment-container .list .list-item");
+      // for (var i = 0; i < list.length; i++) {
+      //   var str = $(list[i]).find("strong").text();
+      //   if (str.indexOf(num) != -1) {
+      //     $(list[i]).css("display","inline-flex");
+      //   }
+      // }
+    }
+  }
+
+
+  $("#book-screen .fab.search-number").hammer().on("tap", function(event){
+    // console.log($("#book-screen .search-box .box").attr("type","number"));
+    // console.log($("#book-screen .search-box .box").attr("maxlength","3"));
+    startSearchMode(event);
+  });
+
+  $("#book-screen .search-box .icon.clear-search").hammer().on("tap", function(event){
+    $("#book-screen .search-box .box").val("");
+
+    $("#book-screen.search-mode.container .list-item").css("display","none");
+    $("#book-screen .search-box .clear-search").removeClass("active");
+    $("#book-screen .search-box .close-search").addClass("active");
+  });
+
+  $("#book-screen .search-box .icon.close-search").hammer().on("tap", function(event){
+    $("#book-screen.search-mode.container .list-item").css("display","inline-flex");
+    $("#book-screen .search-box .box").val("");
+    $("#book-screen.search-mode").removeClass("search-mode");
+  });
+
 
 
   // abrir side-nav
@@ -613,6 +702,29 @@ $(document).ready(function(){
     expandCard();
   });
 
+  $("#cards-screen .fragment-container").hammer({domEvents:true}).on("tap", ".card .actions .delete", function(event){
+    event.stopPropagation();
+
+    $("#cards-screen .scrim-dialog").css("visibility","visible");
+    $("#cards-screen .scrim-dialog").css("background-color","rgba(0, 0, 0, 0.3)");
+    $("#cards-screen .dialog").addClass("active");
+
+    temp["deleteList"] = $(event.target).closest(".card").attr("id");
+    // alert("yhuuu");
+  });
+
+  $("#cards-screen .dialog .actions .exclude").hammer().on("tap", function(event){
+    deleteList(event);
+  });
+
+  $("#cards-screen .dialog .actions .cancel").hammer().on("tap", function(event){
+    closeDialog();
+    // $(".dialog").removeClass("active");
+    //
+    // $(".scrim-dialog").css("background-color","rgba(0, 0, 0, 0.0)");
+    // $(".scrim-dialog").css("visibility","hidden");
+  });
+
   // $(".card .actions .expand").hammer().on("tap", function(event){
   //   // event.stopPropagation();
   //   // event.preventDefault();
@@ -633,8 +745,9 @@ $(document).ready(function(){
   //   expandCard();
   // });
 
-  $(".dialog .actions .cancel").hammer().on("tap", function(event){
+  $("#book-screen .dialog .actions .cancel").hammer().on("tap", function(event){
 
+    $("#book-screen .dialog .text-field").val("");
     $(".dialog").removeClass("active");
 
     $(".scrim-dialog").css("background-color","rgba(0, 0, 0, 0.0)");
@@ -642,7 +755,7 @@ $(document).ready(function(){
 
   });
 
-  $(".dialog .actions .save").hammer().on("tap", function(event){
+  $("#book-screen .dialog .actions .save").hammer().on("tap", function(event){
     saveList();
     // alert("save");
   });
