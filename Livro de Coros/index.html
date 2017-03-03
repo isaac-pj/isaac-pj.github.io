@@ -51,7 +51,7 @@
   <nav class="nav">
     <div class="search-box">
       <form>
-        <input class="box" type="number" name="seach" placeholder="Digite o nome:" maxlength="50">
+        <input class="box" type="number" name="search" placeholder="Digite o nome:" maxlength="50">
         <i class="icon material-icons close-search active">close</i>
         <i class="icon material-icons clear-search">cancel</i>
       </form>
@@ -59,9 +59,9 @@
     <header class = "app-bar primary-toolbar">
       <img class="icon nav-icon" src="img/icons/system/ic_menu_white_24px.svg" alt="">
       <span class="title" >Livro de Coros</span>
-      <!-- <div class="action-icons"> -->
-        <!-- <img class="action-icon" src="img/.svg" alt=""> -->
-      <!-- </div> -->
+      <div class="action-icons">
+        <img class="icon action-icon search-icon" src="img/icons/actions/ic_search_white_24px.svg" alt="">
+      </div>
       <img class="icon more-icon" src="img/icons/system/ic_more_vert_white_24px.svg" alt="">
     </header>
     <ul class="tab-bar">
@@ -89,7 +89,7 @@
           <span class="title">Como devo chamar?</span>
           <form>
             <div for="list-name" class="group">
-              <input id="list-name" class="text-field" type="text" name="name" autofocus="true" pattern="[a-z\s]+$" maxlength="30" required>
+              <input id="list-name" class="text-field" type="text" name="name" pattern="[a-z\s]+$" maxlength="30" required>
               <i class="material-icons add-name">add</i><i class="material-icons drop-arrow visible">arrow_drop_down</i>
               <label for="list-name" class="label">Nome</label>
               <span class="base-line"></span>

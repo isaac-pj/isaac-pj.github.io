@@ -355,6 +355,11 @@ ul{
   align-items: center;
   justify-content: center;
   transition: 0.3s;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
+  /*pointer-events: none;*/
 }
 .fab:active{
   box-shadow: 0px 6px 12px rgba(0,0,0,.2);
@@ -580,10 +585,18 @@ ul{
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
+  /*flex-shrink: 0;*/
 }
 
 .app-bar.title-center .title{
   padding: 0;
+}
+
+.action-icons{
+  /*flex-grow: 1;*/
+  display: inline-flex;
+  align-items: center;
+  /*justify-content: flex-end;*/
 }
 
 .more-icon{

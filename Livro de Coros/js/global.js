@@ -333,7 +333,10 @@ function openList(event) {
 
 function deleteList(event){
   var lists = JSON.parse(localStorage.musicLists);
-    lists.splice(temp["deleteList"]);
+    lists.splice(temp["deleteList"],1);
+    for (var i = temp["deleteList"]; i < lists.length; i++) {
+      lists[i].id--;
+    }
   localStorage.musicLists = JSON.stringify(lists);
   closeDialog();
   updateLists();
@@ -376,6 +379,57 @@ function ajustHeight(element) {
   // console.log('tamanho do elemento: '+$(element).height());
 };
 
+function startSearchMode(type){
+
+  $("#book-screen").addClass("search-mode");
+  $("#book-screen.search-mode .search-box .box")[0].focus();
+  var list = $("#book-screen .fragment-container .list .list-item");
+
+  $("#book-screen .search-box .box").focus(function(){
+    $("#book-screen .search-box .box").keyup(function(){
+      $("#book-screen .search-box .close-search").removeClass("active");
+      $("#book-screen .search-box .clear-search").addClass("active");
+      $("#book-screen.search-mode.container .list-item").css("display","none");
+      if ($(this).val() != ""){
+        if (type == "number") {
+          searchByNumber(parseInt($(this).val()));
+        }else if (type == "title") {
+          searchByTitle($(this).val());
+        }
+      }else{
+        $("#book-screen .search-box .clear-search").removeClass("active");
+        $("#book-screen .search-box .close-search").addClass("active");
+      }
+    });
+  });
+
+  $("#book-screen.search-mode .search-box .box").blur(function(){
+      $("#book-screen.search-mode .search-box .box")[0].focus();
+  });
+
+  function searchByNumber(num){
+    // console.log(num);
+    if(num > 0 && num <= 303){
+      // $("#book-screen.search-mode.container #"+(num-1)).css("display","inline-flex");
+      for (var i = 0; i < list.length; i++) {
+        var str = $(list[i]).find("strong").text();
+        if (str.indexOf(num) != -1) {
+          $(list[i]).css("display","inline-flex");
+        }
+      }
+    }
+  }
+  function searchByTitle(title){
+    // $("#book-screen.search-mode.container #"+(num-1)).css("display","inline-flex");
+    for (var i = 0; i < list.length; i++) {
+      var str = $(list[i]).find(".title").text();
+      if (str.indexOf(title) != -1 || str.toLowerCase().indexOf(title) != -1 || str.indexOf(title.toLowerCase()) != -1){
+        $(list[i]).css("display","inline-flex");
+      }
+    }
+  }
+}
+
 function requestFullScreen() {
 
   var el = document.body;
@@ -410,6 +464,9 @@ $(document).ready(function(){
   //mudar tela
   $(".tab").hammer().on("tap", function(event) {
     changeTabs(event);
+    // if ($("#book-screen").hasClass("search-mode")) {
+    //   $("#book-screen.search-mode .search-box .icon").trigger("tap");
+    // }
   });
 
   //abrir musica
@@ -456,6 +513,9 @@ $(document).ready(function(){
     }else{
       openMusic(event.target.id);
       // changeScreens("music-screen");
+      if ($("#book-screen").hasClass("search-mode")) {
+        $("#book-screen.search-mode .search-box .icon").trigger("tap");
+      }
     }
 
   });
@@ -470,63 +530,15 @@ $(document).ready(function(){
     closeMusic();
   });
 
-  function startSearchMode(event){
-    $("#book-screen .search-box .box")[0].focus();
-    $("#book-screen").addClass("search-mode");
-    var list = $("#book-screen .fragment-container .list .list-item");
-
-    $("#book-screen .search-box .box").focus(function(event){
-      console.log("peguei foco");
-      $("#book-screen .search-box .box").keyup(function(event){
-        $("#book-screen .search-box .close-search").removeClass("active");
-        $("#book-screen .search-box .clear-search").addClass("active");
-        $("#book-screen.search-mode.container .list-item").css("display","none");
-        if ($(this).val() != ""){
-          searchByNumber(parseInt($(this).val()));
-        }else{
-          $("#book-screen .search-box .clear-search").removeClass("active");
-          $("#book-screen .search-box .close-search").addClass("active");
-        }
-      });
-    });
-
-    $("#book-screen.search-mode .search-box .box").blur(function(event){
-      $("#book-screen.search-mode .search-box .box")[0].focus();
-    });
-
-    function searchByNumber(num){
-      // console.log(num);
-      if(num > 0 && num <= 303){
-        // $("#book-screen.search-mode.container #"+(num-1)).css("display","inline-flex");
-        for (var i = 0; i < list.length; i++) {
-          var str = $(list[i]).find("strong").text();
-          if (str.indexOf(num) != -1) {
-            $(list[i]).css("display","inline-flex");
-          }
-        }
-      }
-    }
-    function searchByTitle(num){
-      // console.log(num);
-      // if(num > 0 && num < 303){
-      //   $("#book-screen.search-mode.container #"+(num-1)).css("display","inline-flex");
-      // }
-      // $("#book-screen").addClass("search-mode");
-      // var list = $("#book-screen .fragment-container .list .list-item");
-      // for (var i = 0; i < list.length; i++) {
-      //   var str = $(list[i]).find("strong").text();
-      //   if (str.indexOf(num) != -1) {
-      //     $(list[i]).css("display","inline-flex");
-      //   }
-      // }
-    }
-  }
-
+  $("#book-screen .action-icons .search-icon").hammer().on("tap", function(event) {
+    $("#book-screen .search-box .box").attr("type","text");
+    startSearchMode("title");
+  });
 
   $("#book-screen .fab.search-number").hammer().on("tap", function(event){
     // console.log($("#book-screen .search-box .box").attr("type","number"));
     // console.log($("#book-screen .search-box .box").attr("maxlength","3"));
-    startSearchMode(event);
+    startSearchMode("number");
   });
 
   $("#book-screen .search-box .icon.clear-search").hammer().on("tap", function(event){
@@ -646,6 +658,9 @@ $(document).ready(function(){
 
   // criar lista
   $(".persitent-footer .create").hammer().on("tap", function(event){
+    if ($("#book-screen").hasClass("search-mode")) {
+      $("#book-screen.search-mode .search-box .icon").trigger("tap");
+    }
     createList();
   });
 
@@ -709,7 +724,7 @@ $(document).ready(function(){
     $("#cards-screen .scrim-dialog").css("background-color","rgba(0, 0, 0, 0.3)");
     $("#cards-screen .dialog").addClass("active");
 
-    temp["deleteList"] = $(event.target).closest(".card").attr("id");
+    temp["deleteList"] = parseInt($(event.target).closest(".card").attr("id"));
     // alert("yhuuu");
   });
 
