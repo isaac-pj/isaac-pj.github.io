@@ -131,11 +131,13 @@ ul{
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
   transition: 0.1s ease all;
   transform: scale(0.0);
+  position: fixed;
 }
 
 .dialog.active{
   transition: 0.3s ease all;
   transform: scale(1.0);
+  position: static;
 }
 
 /*titulo*/
@@ -153,6 +155,26 @@ ul{
   font-size: 14px;
   color: #757575;
   padding: 24px;
+}
+
+.dialog .set-text{
+  width: 100%;
+}
+
+/*campo de texto no formulario*/
+.dialog .text-area{
+  width: 100%;
+  min-height: 48px;
+  color: #757575;
+  font-family: "Roboto Regular", sans-serif;
+  font-size: 14px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  resize:none;
+}
+.dialog .text-area:focus{
+  outline: none;
 }
 
 /*botões de ação*/

@@ -51,7 +51,7 @@
   <nav class="nav">
     <div class="search-box">
       <form>
-        <input class="box" type="number" name="search" placeholder="Digite o nome:" maxlength="50">
+        <input class="box" type="number" name="search" placeholder="Digite o número:" maxlength="50">
         <i class="icon material-icons close-search active">close</i>
         <i class="icon material-icons clear-search">cancel</i>
       </form>
@@ -84,7 +84,7 @@
       </li> -->
     </ul>
     <div class="scrim-dialog">
-      <div class="dialog">
+      <div id="0" class="dialog">
         <div class="content">
           <span class="title">Como devo chamar?</span>
           <form>
@@ -145,7 +145,7 @@
     </header>
   </nav>
   <div class="scrim-dialog">
-    <div class="dialog">
+    <div id="1" class="dialog">
       <div class="content">
         <span class="title">Deseja excluir essa lista?</span>
           <div for="" class="group check-msg">
@@ -157,6 +157,19 @@
       <div class="actions align-right">
         <button class="flat-button cancel" type="button" name="button">cancelar</button>
         <button class="flat-button exclude" type="button" name="button">excluir</button>
+      </div>
+    </div>
+
+    <div id="2" class="dialog">
+      <div class="content">
+        <span class="title">Deseja salvar anotações?</span>
+        <form class="set-text">
+          <textarea class="text-area" name="notes" rows="3" placeholder="Escreva uma nota! :)"></textarea>
+        </form>
+      </div>
+      <div class="actions align-right">
+        <button class="flat-button cancel" type="button" name="button">cancelar</button>
+        <button class="flat-button save" type="button" name="button">salvar</button>
       </div>
     </div>
   </div>
@@ -186,8 +199,8 @@
         <i class="icon material-icons">share</i>
       </div>
     </div> -->
+    <button class="fab" type="button" name="button"><i class="material-icons">add</i></button>
   </div>
-  <button class="fab" type="button" name="button"><i class="material-icons">add</i></button>
 
 </div>
 
