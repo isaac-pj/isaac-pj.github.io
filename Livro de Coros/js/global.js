@@ -212,8 +212,7 @@ function saveList(){
     var list = {
       id:null,
       name:$(".dialog.active form #list-name").val(),
-      musics:currentList,
-      comment:""
+      musics:currentList
     }
     if(lists.length > 0){
       list.id = lists[lists.length-1].id + 1;
@@ -287,6 +286,7 @@ function updateLists(){
 function openList(event) {
   var lists = JSON.parse(localStorage.musicLists);
   var card = event.currentTarget;
+  temp["openedList"] = card.id;
 
   var name = $(card).find(".title").text();
   var date = $(card).find(".subtitle").text();
@@ -296,7 +296,6 @@ function openList(event) {
   $("#list-screen .nav .title").text(name+" - "+date);
 
   $("#list-screen .expansion-panel .set-text .text-area").val(comment);
-  $(".expansion-panel .actions .flat-button.save").trigger("tap");
 
   $("#list-screen .list.unchecked, #list-screen .list.checked").empty();
 
@@ -720,15 +719,17 @@ $(document).ready(function(){
   $("#cards-screen .fragment-container").hammer({domEvents:true}).on("tap", ".card .actions .comment", function(event){
     event.stopPropagation();
     temp["commentList"] = parseInt($(event.target).closest(".card").attr("id"));
+    var lists = JSON.parse(localStorage.musicLists);
+    $("#cards-screen #2.dialog .set-text .text-area").val(lists[temp["commentList"]].comment);
     openDialog(2);
-  });
-
-  $("#cards-screen #1.dialog .actions .exclude").hammer().on("tap", function(event){
-    deleteList(event);
   });
 
   $("#cards-screen #1.dialog .actions .cancel").hammer().on("tap", function(event){
     closeDialog();
+  });
+
+  $("#cards-screen #1.dialog .actions .exclude").hammer().on("tap", function(event){
+    deleteList(event);
   });
 
   $("#cards-screen #2.dialog .actions .cancel").hammer().on("tap", function(event){
@@ -737,11 +738,13 @@ $(document).ready(function(){
   });
 
   $("#cards-screen #2.dialog .actions .save").hammer().on("tap", function(event){
-    var lists = JSON.parse(localStorage.musicLists);
-    if($("#cards-screen #2.dialog .set-text .text-area").val() != ""){
-      lists[temp["commentList"]].comment = $("#cards-screen #2.dialog .set-text .text-area").val();
-    }
-    localStorage.musicLists = JSON.stringify(lists);
+    // var lists = JSON.parse(localStorage.musicLists);
+    // if($("#cards-screen #2.dialog .set-text .text-area").val() != ""){
+    //   lists[temp["commentList"]].comment = $("#cards-screen #2.dialog .set-text .text-area").val();
+    // }
+    // localStorage.musicLists = JSON.stringify(lists);
+    $(".expansion-panel .set-text .text-area").val($("#cards-screen #2.dialog .set-text .text-area").val());
+    $(".expansion-panel .actions .flat-button.save").trigger("tap");
     closeDialog();
   });
 
@@ -765,6 +768,9 @@ $(document).ready(function(){
   });
 
   $(".expansion-panel .actions .flat-button.clear").hammer().on("tap", function(event){
+    var lists = JSON.parse(localStorage.musicLists);
+    lists[temp["openedList"]].comment = "";
+    localStorage.musicLists = JSON.stringify(lists);
     $(".expansion-panel .set-text .text-area").text("");
     $(".expansion-panel .set-text .text-area").val("");
     $(".expansion-panel").removeClass("expanded");
@@ -796,6 +802,9 @@ $(document).ready(function(){
       $(".expansion-panel .set-text .text-area").text($(".expansion-panel .set-text .text-area").val());///o .val() está apenas dentro do input, já o .text() é um nó de texto real
       $(".expansion-panel .set-text .text-area").attr("readonly","");
       $(".expansion-panel").removeClass("edit-mode");
+      var lists = JSON.parse(localStorage.musicLists);
+      lists[temp["commentList"]].comment = $(".expansion-panel .set-text .text-area").text();
+      localStorage.musicLists = JSON.stringify(lists);
     }
   });
 

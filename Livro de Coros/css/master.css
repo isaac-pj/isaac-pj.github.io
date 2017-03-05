@@ -67,13 +67,13 @@ ul{
          url('../fonts/text-fonts/Roboto-condensed.ttf');
 }*/
 @font-face {
-  font-family: "Roboto Regular" ;
+  font-family: Roboto Regular ;
   src: local(Roboto-Regular.ttf),url('../fonts/text-fonts/Roboto-Regular.ttf');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: "Roboto Medium" ;
+  font-family: Roboto Medium;
   src: local(Roboto-medium.ttf),url('../fonts/text-fonts/Roboto-medium.ttf');
   font-weight: normal;
   font-style: normal;
@@ -144,7 +144,7 @@ ul{
 .dialog .title{
   color: #212121;
   margin-bottom: 20px;
-  font-family: "Roboto Medium", sans-serif;
+  font-family: Roboto Medium, sans-serif;
   font-size: 20px;
   display: block;
 }
@@ -406,7 +406,7 @@ ul{
   border-radius: 2px;
   padding: 0 16px;
   margin: 6px 8px;
-  font-family: "Roboto medium", sans-serif;
+  font-family: Roboto Medium, sans-serif;
   font-size: 14px;
   text-transform: uppercase;
   background-color: #FFC107;
@@ -431,7 +431,7 @@ ul{
   border-radius: 2px;
   padding: 0 8px;
   margin: 6px 8px;
-  font-family: "Roboto medium", sans-serif;
+  font-family: Roboto Medium, sans-serif;
   font-size: 14px;
   text-transform: uppercase;
   background-color: transparent;
@@ -526,7 +526,7 @@ ul{
 }
 
 .side-nav .list-item{
-  font-family: "Roboto Medium", sans-serif;
+  font-family: Roboto Medium, sans-serif;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
@@ -874,7 +874,7 @@ ul{
 }
 .expansion-panel .title{
   text-transform: uppercase;
-  font-family: "Roboto Medium", sans-serif;
+  font-family: Roboto Medium, sans-serif;
   font-size: 14px;
   line-height: 48px;
 }
@@ -949,7 +949,7 @@ ul{
 
 /*tela de musica enquanto dirige*/
 #music-screen .fragment-container .title{
-  font-family: "Roboto Medium", sans-serif;
+  font-family: Roboto Medium, sans-serif;
   font-size: 20px;
   padding-top: 16px;
 }
