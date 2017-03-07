@@ -59,10 +59,72 @@ function changeTabs(event){
 
   $(parseID(event.target.id)).addClass("active");
   $(".fragment-container[rel="+event.target.id+"]").addClass("active");
+	  // * O metodo "index" me retorna um inteiro com base na posicação do elemento clicado
+	  var tabreference = $(event.target).index();
+	  // Efeito de deslizamento - 160px da largura do elemento x a posição do clique
+	  var sliding = parseInt($(".slider").css("width")) * tabreference;
+	  // A nova posição do slider será baseada no valor da var anterior
+	  $(".slider").css({
+	    left: sliding + "px"
+	  });
 }
 
 function parseID(str){
   return "#"+str;
+}
+
+function rippleEffect (event) {
+    $(document.querySelector('.ripple-effect')).remove();
+    var element = event.target; /* Retorna o evento setado */
+
+    var rect = element.getBoundingClientRect(); /* Retorna o tamanho do elemento e a posição do elemento */
+    var ripple = $('.ripple-effect')[0]; /* Evento a ser executado na seleção - Class ".ripple-effect" */
+
+    if (!ripple) { /* Retorna verdadeiro como o operando é falso. */
+        ripple = document.createElement('span');
+        ripple.className = 'ripple-effect';
+        ripple.style.height = ripple.style.width = Math.max(rect.width, rect.height) + 'px';
+        element.appendChild(ripple); /* Devolve a referência na nova posição do ripple */
+        // $(element).append(ripple); /* Devolve a referência na nova posição do ripple */
+    }
+
+    $(ripple).removeClass("show") /* Removendo o ripple show */
+    var top = event.pageY - rect.top - ripple.offsetHeight / 2 - document.body.scrollTop;
+    var left = event.pageX - rect.left - ripple.offsetWidth / 2 - document.body.scrollLeft;
+    // Retorna o height of an element in pixels, including padding, border and scrollbar
+    $(ripple).css({"top":top+"px", "left":left+"px"});
+    $(ripple).addClass("show") /* Add o ripple show depois de ter capturado as posições */
+
+    // // 3 - Efeito Ripple button
+    //    // Remove as ações anteriores do ripple
+    //    $(".ripple-effect").remove();
+    //  // Configurações
+    //  // o metodo offset envia coordenadas dos elementos, neste caso as posições do clique
+    //  var posX = $(this).offset().left,
+    //      posY = $(this).offset().top,
+    //      buttonWidth = $(this).width(),
+    //      buttonHeight = $(this).height();
+    //  // Add the element
+    //  // o metodo prepend funciona como um "before" do CSS3
+    //  $(this).prepend("<span class='ripple-effect'></span>");
+    //  // Fazendo o efeito ficar dinâmico
+    //  if (buttonWidth >= buttonHeight) {
+    //    buttonHeight = buttonWidth;
+    //  } else {
+    //    buttonWidth = buttonHeight;
+    //  }
+    //  // Capturar o centro do elemento
+    //  var x = e.pageX - posX - buttonWidth / 2;
+    //  var y = e.pageY - posY - buttonHeight / 2;
+    //  // Add os novos atribuidos ao efeito ripple
+    //  $(".ripple-effect").css({
+    //    width: buttonWidth,
+    //    height: buttonHeight,
+    //    top: y + 'px',
+    //    left: x + 'px'
+    //  }).addClass("ripple-effect");
+
+    return false;
 }
 
 function listMusics(){
@@ -296,6 +358,12 @@ function openList(event) {
   $("#list-screen .nav .title").text(name+" - "+date);
 
   $("#list-screen .expansion-panel .set-text .text-area").val(comment);
+  // $(".expansion-panel .actions .flat-button.save").trigger("tap");
+  if ($(".expansion-panel .set-text .text-area").val() != "") {
+    $(".expansion-panel .set-text .text-area").text($(".expansion-panel .set-text .text-area").val());///o .val() está apenas dentro do input, já o .text() é um nó de texto real
+    $(".expansion-panel .set-text .text-area").attr("readonly","");
+    $(".expansion-panel").removeClass("edit-mode");
+  }
 
   $("#list-screen .list.unchecked, #list-screen .list.checked").empty();
 
@@ -461,6 +529,11 @@ $(document).ready(function(){
   //inicializar
   init();
   // requestFullScreen();
+
+  // ripple effect
+  $(".ripple").hammer().on("tap", function(){
+    rippleEffect(event);
+  })
 
   //mudar tela
   $(".tab").hammer().on("tap", function(event) {
