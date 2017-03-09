@@ -87,10 +87,18 @@ function rippleEffect (event) {
         element.appendChild(ripple); /* Devolve a referência na nova posição do ripple */
         // $(element).append(ripple); /* Devolve a referência na nova posição do ripple */
     }
+    // define a velocidade do efeito com base no tamanho do container
+    if (event.type == "press") {
+      $(ripple).css("animation-duration",((rect.width+rect.height)/2)/100*1.5+"s");
+      // $(ripple).css("animation-duration",(Math.max(rect.width, rect.height)/2)/100+"s");
+      // $(ripple).addClass('slow');
+    }else {
+      $(ripple).css("animation-duration",((rect.width+rect.height)/2)/100*0.7+"s");
+    }
 
     $(ripple).removeClass("show") /* Removendo o ripple show */
-    var top = event.pageY - rect.top - ripple.offsetHeight / 2 - document.body.scrollTop;
-    var left = event.pageX - rect.left - ripple.offsetWidth / 2 - document.body.scrollLeft;
+    var top = event.gesture.center.y - rect.top - ripple.offsetHeight / 2 - document.body.scrollTop;
+    var left = event.gesture.center.x - rect.left - ripple.offsetWidth / 2 - document.body.scrollLeft;
     // Retorna o height of an element in pixels, including padding, border and scrollbar
     $(ripple).css({"top":top+"px", "left":left+"px"});
     $(ripple).addClass("show") /* Add o ripple show depois de ter capturado as posições */
@@ -261,6 +269,8 @@ function createList(){
     }
     // função abrir dialogo
     openDialog(0);
+    $("#book-screen .dialog .text-field").focus();
+    keepFocus("#book-screen .dialog .text-field", "#book-screen #0.dialog", "active");
   }else {
     alert("No momento não é possivel criar uma lista vazia");
   }
@@ -435,20 +445,30 @@ function ajustHeight(element) {
   // console.log('tamanho do elemento: '+$(element).height());
 };
 
+function keepFocus(target, element, cls){
+  // $(target)[0].focus();
+  $(target).blur(function(){
+    if ($(element).hasClass(cls)) {
+      $(target)[0].focus();
+    }
+  });
+}
+
 function startSearchMode(type){
+  $("#book-screen .fab.search-number").attr("disabled","true");
 
   $("#book-screen").addClass("search-mode");
   $("#book-screen.search-mode .search-box .box")[0].focus();
   var list = $("#book-screen .fragment-container .list .list-item");
 
-  $("#book-screen .search-box .box").focus(function(){
+  $("#book-screen .search-box .box").focus(function(event){
     //se o desempenho for ruim, usar .change() para a busca ao inves de .keyup()
     $("#book-screen .search-box .box").keyup(function(event){
       event.preventDefault();
       event.stopPropagation();
       $("#book-screen .search-box .close-search").removeClass("active");
       $("#book-screen .search-box .clear-search").addClass("active");
-      $("#book-screen.search-mode.container .list-item").css("display","none");
+      $("#book-screen.search-mode.container .list-item").removeClass("visible");
       if ($(this).val() != ""){
         if (type == "number") {
           searchByNumber(parseInt($(this).val()));
@@ -463,9 +483,10 @@ function startSearchMode(type){
     });
   });
 
-  $("#book-screen.search-mode .search-box .box").blur(function(){
-      $("#book-screen.search-mode .search-box .box")[0].focus();
-  });
+  keepFocus("#book-screen.search-mode .search-box .box", "#book-screen", "search-mode");
+  // $("#book-screen.search-mode .search-box .box").blur(function(){
+  //     $("#book-screen.search-mode .search-box .box")[0].focus();
+  // });
 
   function searchByNumber(num){
     // console.log(num);
@@ -474,7 +495,7 @@ function startSearchMode(type){
       for (var i = 0; i < list.length; i++) {
         var str = $(list[i]).find("strong").text();
         if (str.indexOf(num) != -1) {
-          $(list[i]).css("display","inline-flex");
+          $(list[i]).addClass("visible");
         }
       }
     }
@@ -485,7 +506,7 @@ function startSearchMode(type){
     for (var i = 0; i < list.length; i++) {
       var str = $(list[i]).find(".title").text();
       if (str.indexOf(title) != -1 || str.toLowerCase().indexOf(title) != -1 || str.indexOf(title.toLowerCase()) != -1){
-        $(list[i]).css("display","inline-flex");
+        $(list[i]).addClass("visible");
         result = true;
       }
     }
@@ -493,7 +514,7 @@ function startSearchMode(type){
       for (var i = 0; i < list.length; i++) {
         var str = songs.list[i].letra;
         if (str.indexOf(title) != -1 || str.toLowerCase().indexOf(title) != -1 || str.indexOf(title.toLowerCase()) != -1){
-          $(list[i]).css("display","inline-flex");
+          $(list[i]).addClass("visible");
         }
       }
     }
@@ -531,8 +552,10 @@ $(document).ready(function(){
   // requestFullScreen();
 
   // ripple effect
-  $(".ripple").hammer().on("tap", function(){
-    rippleEffect(event);
+  $(".ripple").hammer().on("tap press", function(event){
+    if (!$(this).attr('disabled')) {
+      rippleEffect(event);
+    }
   })
 
   //mudar tela
@@ -622,9 +645,10 @@ $(document).ready(function(){
   });
 
   $("#book-screen .search-box .icon.close-search").hammer().on("tap", function(event){
-    $("#book-screen.search-mode.container .list-item").css("display","inline-flex");
+    $("#book-screen.search-mode.container .list-item").removeClass("visible");
     $("#book-screen .search-box .box").val("");
     $("#book-screen.search-mode").removeClass("search-mode");
+    $("#book-screen .fab.search-number").removeAttr("disabled");
   });
 
   // abrir side-nav
@@ -838,6 +862,11 @@ $(document).ready(function(){
 
   $(".expansion-panel .header .icon.expand").hammer().on("tap", function(event){
     $(".expansion-panel").toggleClass("expanded");
+    if ($(".expansion-panel.edit-mode").hasClass("expanded")) {
+      $("#list-screen .fab.add-music").attr("disabled","true");
+    }else {
+      $("#list-screen .fab.add-music").removeAttr("disabled");
+    }
   });
 
   $(".expansion-panel .actions .flat-button.clear").hammer().on("tap", function(event){
