@@ -472,6 +472,16 @@ button *{
   transform: scale(0.0);
 }
 
+.contrast .flat-button.negative{
+  color: #757575;
+}
+.contrast .flat-button.negative:active,.contrast .flat-button.negative:hover{
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.contrast .flat-button.negative:focus{
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
 .icon-toggle{
   position: relative;
   display: block;
@@ -501,6 +511,16 @@ button *{
   background-color: transparent;
 }
 
+.app-bar .icon-toggle{
+  color: #fff;
+  transform: scale(1.5);
+}
+.app-bar .icon-toggle:active{
+  /*background-color: transparent;*/
+}
+.app-bar .icon-toggle > i{
+  transform: scale(0.666666);
+}
 
 /*efeito ripple noos componentes*/
 .ripple-effect {
@@ -659,6 +679,7 @@ button *{
   /*line-height: 56px;*/
   padding: 0 16px;
   font-size: 1.2rem;
+  overflow: hidden;
 }
 
 .nav .app-bar.title-center{
@@ -973,6 +994,10 @@ button *{
   font-family: 'Roboto Medium', sans-serif;
   font-size: 14px;
   line-height: 48px;
+}
+
+.icon.expand{
+  color: rgba(0, 0, 0, 0.54);
 }
 
 /*animação do botão de expandir*/

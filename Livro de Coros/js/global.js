@@ -269,8 +269,7 @@ function createList(){
     }
     // função abrir dialogo
     openDialog(0);
-    $("#book-screen .dialog .text-field").focus();
-    keepFocus("#book-screen .dialog .text-field", "#book-screen #0.dialog", "active");
+    keepFocus("#book-screen .dialog.active .text-field", "#book-screen .dialog", "active");
   }else {
     alert("No momento não é possivel criar uma lista vazia");
   }
@@ -446,19 +445,18 @@ function ajustHeight(element) {
 };
 
 function keepFocus(target, element, cls){
-  // $(target)[0].focus();
   $(target).blur(function(){
     if ($(element).hasClass(cls)) {
-      $(target)[0].focus();
+      $(target).focus();
     }
   });
+  $(target).focus();
 }
 
 function startSearchMode(type){
   $("#book-screen .fab.search-number").attr("disabled","true");
 
   $("#book-screen").addClass("search-mode");
-  $("#book-screen.search-mode .search-box .box")[0].focus();
   var list = $("#book-screen .fragment-container .list .list-item");
 
   $("#book-screen .search-box .box").focus(function(event){
@@ -519,6 +517,10 @@ function startSearchMode(type){
       }
     }
   }
+}
+
+function normalize(element){
+
 }
 
 function requestFullScreen() {
@@ -639,7 +641,7 @@ $(document).ready(function(){
   $("#book-screen .search-box .icon.clear-search").hammer().on("tap", function(event){
     $("#book-screen .search-box .box").val("");
 
-    $("#book-screen.search-mode.container .list-item").css("display","none");
+    $("#book-screen.search-mode.container .list-item").removeClass("visible");
     $("#book-screen .search-box .clear-search").removeClass("active");
     $("#book-screen .search-box .close-search").addClass("active");
   });
@@ -745,12 +747,12 @@ $(document).ready(function(){
   });
 
   //cancelar a criação de uma lista
-  $(".persitent-footer .cancel").hammer().on("tap", function(event){
+  $("#book-screen .persitent-footer .negative").hammer().on("tap", function(event){
       stopEditMode();
   });
 
   // criar lista
-  $(".persitent-footer .create").hammer().on("tap", function(event){
+  $("#book-screen .persitent-footer .positive").hammer().on("tap", function(event){
     if ($("#book-screen").hasClass("search-mode")) {
       $("#book-screen.search-mode .search-box .icon").trigger("tap");
     }
@@ -782,9 +784,6 @@ $(document).ready(function(){
 
     });
 
-    // $(".drop-arrow").hide();
-    // $(".add-name").show(400);
-    // // alert("mudei");
   });
 
   // epandir lista
@@ -819,6 +818,7 @@ $(document).ready(function(){
     var lists = JSON.parse(localStorage.musicLists);
     $("#cards-screen #2.dialog .set-text .text-area").val(lists[temp["commentList"]].comment);
     openDialog(2);
+    keepFocus("#cards-screen #2.dialog .text-area", "#cards-screen #2.dialog", "active");
   });
 
   $("#cards-screen #1.dialog .actions .cancel").hammer().on("tap", function(event){
@@ -862,6 +862,7 @@ $(document).ready(function(){
 
   $(".expansion-panel .header .icon.expand").hammer().on("tap", function(event){
     $(".expansion-panel").toggleClass("expanded");
+    keepFocus("#list-screen .expansion-panel .text-area", "#list-screen .expansion-panel", "expanded");
     if ($(".expansion-panel.edit-mode").hasClass("expanded")) {
       $("#list-screen .fab.add-music").attr("disabled","true");
     }else {
