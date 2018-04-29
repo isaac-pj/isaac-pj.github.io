@@ -4,11 +4,7 @@ Projetos em Desenvolvimento
 
 
 <h4>Livro de Coros</h4>
-<a src="https://isaac-pj.github.io/Livro%20de%20Coros">Clique Aqui</a>
-
-<a src="https://isaac-pj.github.io/divertilix"><h4>Divertilix</h4></a>
-
+<a href="https://isaac-pj.github.io/Livro%20de%20Coros">Clique Aqui</a>
 
 <h4>Divertilix</h4>
-link:
-<a>https://isaac-pj.github.io/divertilix</a>
+<a href="https://isaac-pj.github.io/divertilix"><h4>Clique Aqui</h4></a>
