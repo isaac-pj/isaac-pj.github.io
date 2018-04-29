@@ -6,4 +6,4 @@ Projetos em Desenvolvimento
 
 <a href="https://isaac-pj.github.io/divertilix" target="_blank">Divertilix</a>
 
-<a href="https://isaac-pj.github.io/site" target="_blank">Chat em Grupo</a>
+<a href="https://isaac-pj.github.io/site" target="_blank">UFC 10 Anos</a>
